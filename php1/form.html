@@ -1,7 +1,22 @@
 <html>
 
 <head>
+<style>
 
+form {
+	background-color:yellow;
+	width:400px;
+	border:2px solid black;
+	margin:10px;
+	padding:10px;
+	
+
+
+}
+
+
+
+</style>
 
 
 
@@ -14,12 +29,13 @@
 
 <body>
 
-<form>
-Name            <input type="text" name ="nameInput"> <br>
-Phone number    <input type ="number" name ="phoneInput"> <br>
-Email           <input type="text" name ="emailInput"> <br> 
-Adress          <input type="text" name ="adressInput"> <br> 
-Postal number   <input type="number" name ="postalInput"> <br> 
+<form action="hej.php">
+First Name       <input type="text" name ="fNameInput" > <br>
+Last Name       <input type="text" name ="lNameInput" > <br>
+Phone number    <input type ="number" name ="phoneInput" > <br>
+Email           <input type="text" name ="emailInput" > <br> 
+Adress          <input type="text" name ="adressInput" > <br> 
+Postal number   <input type="number" name ="postalInput" > <br> 
 Sex             <input type="radio"id="male" name ="sexInput" value="Male">
 	 			<label for="male">Male</label><br>
 	  			<input type="radio"id="female" name ="sexInput" value="Female">
@@ -29,7 +45,6 @@ Password  		<input type="password" name ="passwordInput"> <br>
 
 <button type ="submit">Done</button>
 
-m
 
 
 
