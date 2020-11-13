@@ -1,3 +1,13 @@
+<html>
+<head>
+</head>
+<body>
+
+<form method="get" action="/~erisal-8/php1/Start.php">
+    <button type="submit">Start Page</button>
+</form>
+
+</body>
 <?php 
 
 $servername   = "127.0.0.1";
@@ -26,14 +36,7 @@ $query = ("SELECT * FROM `Customer` WHERE `Email` LIKE '$userName' AND `Password
 $result =mysqli_query($conn, $query);
 
 if(mysqli_num_rows($result) ===1){
-    $row =mysqli_fetch_assoc($result);
-    
-    print_r($row);
-    
-    if($row['Email'] === $userName && $row['Password'] === $password);
-    {
-        echo "Login success!";
-    }
+    echo "Login success!";
  }
  else{
      echo "Login failed. Email or password incorrect";
@@ -41,3 +44,4 @@ if(mysqli_num_rows($result) ===1){
 
 
 ?>
+</html>
