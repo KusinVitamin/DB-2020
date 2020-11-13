@@ -1,5 +1,6 @@
 <?php 
 
+
 $servername   = "127.0.0.1";
 $database = "db970801";
 $username = "970801";
@@ -11,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed.<br><br>" . $conn->connect_error);
 }
-echo "Database connection successful.<br><br>";
+
 
 
 
@@ -25,13 +26,14 @@ $query = ("SELECT * FROM `Customer` WHERE `Email` LIKE '$userName' AND `Password
     
 $result =mysqli_query($conn, $query);
 
+
 if(mysqli_num_rows($result) ===1){
     $row =mysqli_fetch_assoc($result);
     
-    print_r($row);
-    
+
     if($row['Email'] === $userName && $row['Password'] === $password);
     {
+         
         echo "Login success!";
     }
  }
