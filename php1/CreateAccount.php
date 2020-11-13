@@ -19,36 +19,36 @@ echo "Database connection successful.<br><br>";
 
 
 // Extract account info from form.
-$FnameInput = $_POST['FnameInput'];
-$LnameInput = $_POST['LnameInput'];
-$SexInput = $_POST['SexInput'];
-$DoBInput = $_POST['DoBInput'];
-$PasswordInput = $_POST['PasswordInput'];
+$FnameInput = "'" . $_POST['FnameInput'] . "'";
+$LnameInput = "'" . $_POST['LnameInput'] . "'";
+$SexInput = "'" . $_POST['SexInput'] . "'";
+$DoBInput = "'" . $_POST['DoBInput'] . "'";
+$PasswordInput = "'" . $_POST['PasswordInput'] . "'";
 if(empty($_POST['PnumberInput'])){
-    $PnumberInput = NULL;
+    $PnumberInput = "NULL";
 } else{
-    $PnumberInput = $_POST['PnumberInput'];
+    $PnumberInput = "'" . $_POST['PnumberInput'] . "'";
 }
 if(empty($_POST['EmailInput'])){
-    $EmailInput = NULL;
+    $EmailInput = "NULL";
 } else{
-    $EmailInput = $_POST['EmailInput'];
+    $EmailInput = "'" . $_POST['EmailInput'] . "'";
 }
 if(empty($_POST['AdressInput'])){
-    $AdressInput = NULL;
+    $AdressInput = "NULL";
 } else{
-    $AdressInput = $_POST['AdressInput'];
+    $AdressInput = "'" . $_POST['AdressInput'] . "'";
 }
 if(empty($_POST['PostalCodeInput'])){
-    $PostalCodeInput = NULL;
+    $PostalCodeInput = "NULL";
 } else{
-    $PostalCodeInput = $_POST['PostalCodeInput'];
+    $PostalCodeInput = "'" . $_POST['PostalCodeInput'] . "'";
 }
 
 
 // Insert account info as new tuple in the Customer table.
 $sql_State = "INSERT INTO Customer (`Fname`, `Lname`, `Pnumber`, `Email`, `Adress`, `PostalCode`, `Sex`, `DoB`, `Password`) 
-              VALUES ('$FnameInput', '$LnameInput', '$PnumberInput', '$EmailInput', '$AdressInput', '$PostalCodeInput', '$SexInput', '$DoBInput', '$PasswordInput');";
+              VALUES ($FnameInput, $LnameInput, $PnumberInput, $EmailInput, $AdressInput, $PostalCodeInput, $SexInput, $DoBInput, $PasswordInput);";
 
 
 if(mysqli_query($conn, $sql_State)){
