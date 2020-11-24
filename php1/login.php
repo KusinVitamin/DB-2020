@@ -13,8 +13,11 @@
 
 
 <body>
+<?php 
+session_start();
 
-<form method="get" action="/~erisal-8/php1/Start.php">
+?>
+<form method="get" action="Start.php">
     <button type="submit">Start Page</button>
 </form>
 

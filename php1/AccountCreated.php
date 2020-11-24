@@ -12,19 +12,9 @@
 
 <?php
 
-$servername   = "127.0.0.1";
-$database = "db970801";
-$username = "970801";
-$password = "monkagiga123";
+session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed.<br><br>" . $conn->connect_error);
-}
-echo "Database connection successful.<br><br>";
-
+require_once 'db_connection.php';
 
 // Extract account info from form.
 $FnameInput = "'" . $_POST['FnameInput'] . "'";
@@ -61,6 +51,7 @@ $sql_State = "INSERT INTO Customer (`Fname`, `Lname`, `Pnumber`, `Email`, `Adres
 
 if(mysqli_query($conn, $sql_State)){
     echo "Account created successfully.<br><br>";
+   
     
 }else{
     echo "Account not created. Check your inputs.<br><br>" . $sql_State . "<br>" . mysqli_error($conn) . "<br><br>";

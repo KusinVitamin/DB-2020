@@ -3,26 +3,15 @@
 </head>
 <body>
 
-<form method="get" action="/~erisal-8/php1/Start.php">
+<form method="get" action="Start.php">
     <button type="submit">Start Page</button>
 </form>
 
 </body>
 <?php 
+session_start();
 
-
-$servername   = "127.0.0.1";
-$database = "db970801";
-$username = "970801";
-$password = "monkagiga123";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed.<br><br>" . $conn->connect_error);
-}
-
+require_once 'db_connection.php';
 
 
 
@@ -37,18 +26,20 @@ $query = ("SELECT * FROM `Customer` WHERE `Email` LIKE '$userName' AND `Password
 $result =mysqli_query($conn, $query);
 
 
-if(mysqli_num_rows($result) ===1){
 
+if(mysqli_num_rows($result) ===1){
+    
     $row =mysqli_fetch_assoc($result);
     
 
     if($row['Email'] === $userName && $row['Password'] === $password);
     {
-         
-        echo "Login success!";
+        //Session variable ,Account from the present shopper
+        $_SESSION['username_login'] = $row['Email'];
+       
+        header('Location:Start.php');
     }
-
-    echo "Login success!";
+  
 
  }
  else{
