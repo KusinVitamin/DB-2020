@@ -8,7 +8,7 @@
         Log In
     </div>
     </a>
-    <a href="/~erisal-8/php1/Account_Choose.php">
+    <a href="/~erisal-8/php1/CreateAccount.php">
     <div id="createAccount">
         Create Account
     </div>

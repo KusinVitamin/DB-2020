@@ -36,7 +36,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
 	$resPasswordCheck = mysqliquery($conn, $queryPasswordCheck);
 
 	if(mysqli_num_rows($resPasswordCheck) === 1){
-		//Börja session.
+		$_SESSION['email'] = $inputEmail;
 		$feedbackString = "Login success!";
 	} else {
         $feedbackString = "Incorrect password.";
