@@ -34,9 +34,6 @@ form {
 
 <body>
 <div data-include="Header"></div>
-	<form method="get" action="Start.php">
-		<button type="submit">Start Page</button>
-	</form>
 
 <form method="POST" action="AccountCreate.php">
 First Name      <input type="text" name ="FnameInput" required> <br>

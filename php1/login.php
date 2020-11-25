@@ -19,14 +19,11 @@
 session_start();
 
 ?>
-<form method="get" action="Start.php">
-    <button type="submit">Start Page</button>
-</form>
 
 <form action ="AccountSearch.php" method="POST">
 		<p>
 		<label>Email: </label>
-		<input type ="text" id="userName" name="userName" required>		
+		<input type ="text" id="email" name="email" required>		
 		</p>
 		
 		<p>
