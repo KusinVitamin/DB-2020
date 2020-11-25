@@ -1,37 +1,43 @@
-<html>
+<?php
+$queryEmailExists = "SELECT Con.Email
+FROM ContactInfo AS Con 
+INNER JOIN Customers AS Cus 
+ON Con.CustomerID = Cus.CustomerID
+WHERE Con.Email = $inputEmail
+UNION
+SELECT Emp.Email
+FROM Employees AS Emp
+WHERE Emp.Email = $inputEmail";
 
-<head>
-    <style>
+$resEmailExists = mysqliquery($conn, $queryEmailExists);
 
-        form {
-            background-color:yellow;
-            width:400px;
-            border:2px solid black;
-            margin:10px;
-            padding:10px;
+if(mysqli_num_rows($resEmailExists) === 1){
+	$feedbackString = "Email already in use.";
+} else{
+    $querySupplierExists = "SELECT CompanyPassword
+    FROM Suppliers
+    WHERE SupplierName = $supplierInput;";
 
+    $resSuppliersExists = mysqliquery($conn, $querySuppliersExists);
 
-
+    if(mysqli_num_rows($resSuppliersExists) === 1){
+        $row = mysqli_fetch_assoc($result);
+        
+        if($row['CompanyPassword'] === $companyPasswordInput){
+            $queryInsertEmployee = "INSERT INTO Employees (Email, Company, Fname, Lname, Password)
+                        VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
+            mysqliquery($conn, $queryInsertEmployee);
+            $feedbackString = "Employee account created.";
+        } else{
+            $feedbackString = "Incorrect company password.";
         }
-
-    </style>
-
-</head>
-
-<body>
-<div data-include="Header"></div>
-<form method="get" action="Start.php">
-    <button type="submit">Start Page</button>
-</form>
-<form method="POST" action="EmployeeCreated.php">
-    First Name      <input type="text" name ="FnameInput" required> <br>
-    Last Name       <input type="text" name ="LnameInput" required> <br>
-    Password  		<input type="password" name ="PasswordInput" required> <br>
-    Company         <input type ="tel" name ="CompanyInput" > <br>
-    Company Password <input type="password" name ="CPasswordInput" required> <br>
-    Email           <input type="text" name ="EmailInput" > <br>
-
-    <button type ="submit">Create account</button>
-</form>
-</body>
-</html>
+    } else{
+        $queryInsertSupplierAndEmployee = "INSERT INTO Suppliers (SupplierName, CompanyPassword)
+                        VALUES ($companyInput, $companyPasswordInput)
+                        AND
+                        INSERT INTO Employees (Email, Company, Fname, Lname, Password)
+                        VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
+        $feedbackString = "Employee account created. (New supplier)";
+    }
+}
+?>
