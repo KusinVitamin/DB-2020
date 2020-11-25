@@ -13,8 +13,16 @@
 
 
 <body>
+<<<<<<< HEAD
 
 <form method="get" action="/~erisal-8/php1/Start.php">
+=======
+<?php 
+session_start();
+
+?>
+<form method="get" action="Start.php">
+>>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
     <button type="submit">Start Page</button>
 </form>
 

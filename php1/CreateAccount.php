@@ -29,11 +29,19 @@ form {
 
 <body>
 
+<<<<<<< HEAD
 	<form method="get" action="/~erisal-8/php1/Start.php">
 		<button type="submit">Start Page</button>
 	</form>
 
 <form method="POST" action="AccountCreated.php">
+=======
+	<form method="get" action="Start.php">
+		<button type="submit">Start Page</button>
+	</form>
+
+<form method="POST" action="AccountCreate.php">
+>>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
 First Name      <input type="text" name ="FnameInput" required> <br>
 Last Name       <input type="text" name ="LnameInput" required> <br>
 Phone number    <input type ="tel" name ="PnumberInput" > <br>

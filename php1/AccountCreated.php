@@ -12,6 +12,7 @@
 
 <?php
 
+<<<<<<< HEAD
 $servername   = "127.0.0.1";
 $database = "db970801";
 $username = "970801";
@@ -25,6 +26,11 @@ if ($conn->connect_error) {
 }
 echo "Database connection successful.<br><br>";
 
+=======
+session_start();
+
+require_once 'db_connection.php';
+>>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
 
 // Extract account info from form.
 $FnameInput = "'" . $_POST['FnameInput'] . "'";
@@ -61,6 +67,10 @@ $sql_State = "INSERT INTO Customer (`Fname`, `Lname`, `Pnumber`, `Email`, `Adres
 
 if(mysqli_query($conn, $sql_State)){
     echo "Account created successfully.<br><br>";
+<<<<<<< HEAD
+=======
+   
+>>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
     
 }else{
     echo "Account not created. Check your inputs.<br><br>" . $sql_State . "<br>" . mysqli_error($conn) . "<br><br>";
