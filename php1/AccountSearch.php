@@ -1,37 +1,28 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(function(){
+    var includes = $('[data-include]');
+    jQuery.each(includes, function(){
+      var file = '/~erisal-8/' + $(this).data('include') + '.php';
+      $(this).load(file);
+    });
+  });
+</script>
 </head>
 <body>
 
-<<<<<<< HEAD
-<form method="get" action="/~erisal-8/php1/Start.php">
-=======
 <form method="get" action="Start.php">
->>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
     <button type="submit">Start Page</button>
 </form>
 
 </body>
+<div data-include="Header"></div>
 <?php 
-<<<<<<< HEAD
-
-$servername   = "127.0.0.1";
-$database = "db970801";
-$username = "970801";
-$password = "monkagiga123";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed.<br><br>" . $conn->connect_error);
-}
-echo "Database connection successful.<br><br>";
-=======
 session_start();
 
 require_once 'db_connection.php';
->>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
 
 
 
@@ -45,13 +36,6 @@ $query = ("SELECT * FROM `Customer` WHERE `Email` LIKE '$userName' AND `Password
     
 $result =mysqli_query($conn, $query);
 
-<<<<<<< HEAD
-if(mysqli_num_rows($result) ===1){
-    echo "Login success!<br><br>";
- }
- else{
-     echo "Login failed. Email or password incorrect.<br><br>";
-=======
 
 
 if(mysqli_num_rows($result) ===1){
@@ -71,7 +55,6 @@ if(mysqli_num_rows($result) ===1){
  }
  else{
      echo "Login failed. Email or password incorrect";
->>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
  }
 
 

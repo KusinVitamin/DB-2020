@@ -1,6 +1,16 @@
 <html>
 
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(function(){
+    var includes = $('[data-include]');
+    jQuery.each(includes, function(){
+      var file = '/~erisal-8/' + $(this).data('include') + '.php';
+      $(this).load(file);
+    });
+  });
+</script>
 <style>
 
 form {
@@ -18,30 +28,17 @@ form {
 
 </style>
 
-
-
-
-
-
 </head>
 
 
 
 <body>
-
-<<<<<<< HEAD
-	<form method="get" action="/~erisal-8/php1/Start.php">
-		<button type="submit">Start Page</button>
-	</form>
-
-<form method="POST" action="AccountCreated.php">
-=======
+<div data-include="Header"></div>
 	<form method="get" action="Start.php">
 		<button type="submit">Start Page</button>
 	</form>
 
 <form method="POST" action="AccountCreate.php">
->>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
 First Name      <input type="text" name ="FnameInput" required> <br>
 Last Name       <input type="text" name ="LnameInput" required> <br>
 Phone number    <input type ="tel" name ="PnumberInput" > <br>

@@ -1,28 +1,25 @@
+
 <html>
-
 <head>
-
-
-<title> Login page</title>
-
-
-
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(function(){
+    var includes = $('[data-include]');
+    jQuery.each(includes, function(){
+      var file = '/~erisal-8/' + $(this).data('include') + '.php';
+      $(this).load(file);
+    });
+  });
+</script>
 </head>
 
-
 <body>
-<<<<<<< HEAD
-
-<form method="get" action="/~erisal-8/php1/Start.php">
-=======
+<div data-include="Header"></div>
 <?php 
 session_start();
 
 ?>
 <form method="get" action="Start.php">
->>>>>>> c9217d71d2f8db19beeb733fee77ae4812dfa5ac
     <button type="submit">Start Page</button>
 </form>
 
