@@ -12,16 +12,15 @@
   });
 </script>
 <style>
+
 form.CredentialsForm {
 	background-color:yellow;
 	width:400px;
 	border:2px solid black;
 	margin:10px;
 	padding:10px;
-	
-
-
 }
+
 </style>
 </head>
 
@@ -34,9 +33,10 @@ $accountChoice = $_GET['create_account'];
 if($accountChoice == "employee"){
 ?>
 	
-<form class="CredentialsForm" method="POST" action="AccountSearch.php">
+<form class="CredentialsForm" method="POST" action="CreateEmployee.php">
 <input type = "hidden" name ="account" value="e">
 Company name:      <input type="text" name ="CompanyInput" required> <br>
+Company password:  <input type="password" name ="CompanyPassword" required> <br>
 Email:	           <input type="text" name ="EmailInput" required> <br>
 Personal password: <input type ="password" name ="P_passwordInput" required> <br>
 First name         <input type="text" name ="Fname" > <br>
@@ -49,7 +49,7 @@ echo "Du valde att göra en employee.";
 } else{
 ?>
 
-<form class="CredentialsForm" method="POST" action="AccountSearch.php">
+<form class="CredentialsForm" method="POST" action="CreateCustomer.php">
 <input type = "hidden" name ="account" value="c">
 First name:     <input type="text" name ="Fname" required> <br>
 Last name:	    <input type="text" name ="Lname" required> <br>
@@ -58,7 +58,6 @@ Email           <input type="text" name ="EmailInput" required> <br>
 Adress          <input type="text" name ="AdressInput" required> <br>
 Postal code  	<input type="text" name ="PostalCodeInput" > <br>
 Password        <input type="password" name ="Password" required> <br>
-Email password   <input type="password" name ="emailPasswordInput" required> <br>
 <button type ="submit">Create account</button>
 </form>
 
