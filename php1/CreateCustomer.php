@@ -1,4 +1,15 @@
 <?php
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+session_start();
+$feedbackString = "";
+
+require_once 'db_connection.php';
+
 $queryEmailExists = "SELECT Con.Email
 FROM ContactInfo AS Con 
 INNER JOIN Customers AS Cus 
@@ -19,13 +30,14 @@ if(mysqli_num_rows($resEmailExists) === 1){
 	
 	mysqliquery($conn, $queryInsertCustomer);
 	
-	$queryContactInfo = "INSERT INTO ContactInfo (CustomerID, Fname, Lname, Pnumber, Email, Address, PostalCode)
+	$queryInsertContactInfo = "INSERT INTO ContactInfo (CustomerID, Fname, Lname, Pnumber, Email, Address, PostalCode)
 			SELECT CustomerID, $Fname, $Lname, $Pnumber, $Email, $Address, $PostalCode
 			FROM Customers 
 			WHERE Password = $inputPassword;
 
-	mysqliquery($conn, $queryContactInfo);
+	mysqliquery($conn, $queryInsertContactInfo);
 
-	$feedbackString = "Account created.";
+    $feedbackString = "Account created.";
 }
+$_SESSION['feedbackString'] = $feedbackString;
 ?>

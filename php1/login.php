@@ -14,11 +14,19 @@
 </head>
 
 <body>
-<div data-include="Header"></div>
 <?php 
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 session_start();
-
+$feedbackString = "";
 ?>
+
+<div data-include="Header"></div>
+
 
 <form action ="AccountSearch.php" method="POST">
 		<p>
@@ -34,33 +42,11 @@ session_start();
 		</p>
  </form>
 
-
-
-
-
-
-
-
-
-
-
-
+<?php
+$feedbackString = $_SESSION['feedbackString'];
+echo $feedbackString;
+?>
 
 
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </html>
