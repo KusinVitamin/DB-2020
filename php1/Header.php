@@ -3,18 +3,21 @@
 <form id="searchForm" action="AssetListings.php"> 
     <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
 </form>
-<div id="login" href="/~ollelv-8/php1/login.php">
-	<a href="/~ollelv-8/php1/login.php">
-    <p>Log In</p></a>
-</div>
-<div id="createAccount" href="/~ollelv-8/php1/Account_Choose.php">
-    <p>Create Account</p>
-    <a href="/~ollelv-8/php1/Account_Choose.php">
-    <p>Create new account</p></a>
-</div>
-<div id="logout" href="Logout.php">
-    <p>Log Out</p>
-</div>
+    <a href="/~erisal-8/php1/login.php">
+    <div id="login">
+        Log In
+    </div>
+    </a>
+    <a href="/~erisal-8/php1/Account_Choose.php">
+    <div id="createAccount">
+        Create Account
+    </div>
+    </a>
+    <a href="/~erisal-8/php1/Logout.php">
+    <div id="logout">
+        Log Out
+    </div>
+    </a>
 <a id="cartIcon" href="Shoppingcart.php">
     <img src="cart.png" width="70" height="70">
 </a>
@@ -24,6 +27,9 @@
 * { 
     margin: 0; 
     padding : 0;
+}
+a{
+    margin: 5px;
 }
 #header{
     background-color: #131921;
