@@ -1,22 +1,8 @@
 <div id="header">
-<a id="title" href="AssetListings.php">Marketplace</a>
-<form id="searchForm" action="AssetListings.php"> 
-    <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
-</form>
-
-<div id="login" href="/~ollelv-8/php1/login.php">
-	<a href="/~ollelv-8/php1/login.php">
-    <p>Log In</p></a>
-</div>
-<div id="createAccount" href="/~ollelv-8/php1/CreateAccount.php">
-    <p>Create Account</p>
-    <a href="/~ollelv-8/php1/CreateAccount.php">
-    <p>Create new account</p></a>
-</div>
-<div id="logout" href="Logout.php">
-    <p>Log Out</p>
-</div>
-
+    <a id="title" href="AssetListings.php">Marketplace</a>
+    <form id="searchForm" action="AssetListings.php"> 
+        <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
+    </form>
     <a href="/~erisal-8/php1/login.php">
     <div id="login">
         Log In
@@ -32,10 +18,9 @@
         Log Out
     </div>
     </a>
-
-<a id="cartIcon" href="Shoppingcart.php">
-    <img src="cart.png" width="70" height="70">
-</a>
+    <a id="cartIcon" href="Shoppingcart.php">
+        <img src="cart.png" width="70" height="70">
+    </a>
 </div>
 
 <style>

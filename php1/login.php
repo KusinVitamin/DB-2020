@@ -25,21 +25,10 @@ session_start();
 $feedbackString = "";
 ?>
 
-<<<<<<< HEAD
 <div data-include="Header"></div>
 
 
 <form action ="AccountSearch.php" method="POST">
-=======
-<form action ="LoginCheck.php" method="POST">
-
- 	<input type="radio" id="employee_login" name="loginInput" value="employee_login">
-  	<label for="male">Login as employee </label><br>
-  	<input type="radio" id="customer" name="loginInput" value="customer_login">
-  	<label for="customer">Login as customer</label><br>
-  	
-  
->>>>>>> df7b9300ee2bec85d6f153b9f80d75be3ae017c7
 		<p>
 		<label>Email: </label>
 
@@ -58,8 +47,10 @@ $feedbackString = "";
  </form>
 
 <?php
-$feedbackString = $_SESSION['feedbackString'];
-echo $feedbackString;
+if($_SESSION['feedbackString']){
+	$feedbackString = $_SESSION['feedbackString'];
+	echo $feedbackString;
+}
 ?>
 
 

@@ -6,13 +6,13 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
 </script>
 <style>
-form {
+form.Credentials {
 	background-color:yellow;
 	width:400px;
 	border:2px solid black;
@@ -44,7 +44,7 @@ if(isset($_POST['submitButton'])){
     $create_account= $_POST['create_account'];
     if($create_account == "employee"){
     ?>
-    <form method="POST" action="AccountSearch.php">
+    <form class="Credentials" method="POST" action="AccountSearch.php">
     <input type = "hidden" name ="account" value="e">
     Company name:      <input type="text" name ="CompanyInput" required> <br>
     Email:	           <input type="text" name ="EmailInput" required> <br>
@@ -61,7 +61,7 @@ if(isset($_POST['submitButton'])){
 	echo "Du valde att göra en employee.";
 	}else {
 	?>
-    <form method="POST" action="AccountSearch.php">
+    <form class="Credentials" method="POST" action="AccountSearch.php">
     <input type = "hidden" name ="account" value="c">
     First name:     <input type="text" name ="Fname" required> <br>
     Last name:	    <input type="text" name ="Lname" required> <br>
@@ -86,7 +86,7 @@ if(isset($_POST['submitButton'])){
 <?php 
 if(!isset($_POST['submitButton'])){
     ?>
-    <form action="" method="post" >
+    <form class="Credentials" action="" method="post" >
 	<input type="radio" id="employee" name="create_account" value="employee">
 	<label for="male">Create employee account</label><br>
 	<input type="radio" id="customer" name="create_account" value="customer">
@@ -95,8 +95,11 @@ if(!isset($_POST['submitButton'])){
 	</form> 
 <?php 
 }
-$feedbackString = $_SESSION['feedbackString'];
-echo $feedbackString;
+
+if($_SESSION['feedbackString']){
+	$feedbackString = $_SESSION['feedbackString'];
+	echo $feedbackString;
+}
 ?>
 
 </body>
