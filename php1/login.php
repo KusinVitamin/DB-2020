@@ -23,10 +23,17 @@ session_start();
     <button type="submit">Start Page</button>
 </form>
 
-<form action ="AccountSearch.php" method="POST">
+<form action ="LoginCheck.php" method="POST">
+
+ 	<input type="radio" id="employee_login" name="loginInput" value="employee_login">
+  	<label for="male">Login as employee </label><br>
+  	<input type="radio" id="customer" name="loginInput" value="customer_login">
+  	<label for="customer">Login as customer</label><br>
+  	
+  
 		<p>
 		<label>Email: </label>
-		<input type ="text" id="userName" name="userName" required>		
+		<input type ="text" id="userName" name="emailInput" required>		
 		</p>
 		
 		<p>

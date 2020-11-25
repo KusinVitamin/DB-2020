@@ -43,15 +43,17 @@ form {
 <?php 
 
 
-$accountChoice = $_GET['create_account'];
-
-if($accountChoice == "employee"){
-    ?>
+if(isset($_POST['submitButton'])){
+    
+    $create_account= $_POST['create_account'];
+    if($create_account == "customer"){
+        ?>
     <form method="POST" action="AccountSearch.php">
     <input type = "hidden" name ="account" value="e">
     Company name:      <input type="text" name ="CompanyInput" required> <br>
     Email:	           <input type="text" name ="EmailInput" required> <br>
     Personal password: <input type ="password" name ="P_passwordInput" required> <br>
+    Company password: <input type ="password" name ="p_passwordInput" required> <br>
     First name         <input type="text" name ="Fname" > <br>
     Last name          <input type="text" name ="Lname" > <br>
     
@@ -87,9 +89,24 @@ if($accountChoice == "employee"){
     // Account creating for customer
    
 }
+    
 
+}
+?><?php 
+if(!isset($_POST['submitButton'])){
 
-?>
+    ?>
+    
+    <form action="" method="post" >
+	
+  <input type="radio" id="employee" name="create_account" value="employee">
+  <label for="male">Create employee account</label><br>
+  <input type="radio" id="customer" name="create_account" value="customer">
+  <label for="customer">Create customer account</label><br>
+  <input type="submit" name="submitButton" >
+  <?php 
+}?>
+</form> 
 
 
 

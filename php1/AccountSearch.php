@@ -22,8 +22,31 @@
 <?php 
 session_start();
 
-require_once 'db_connection.php';
+//Employee variables
 
+$E_company =$_POST['CompanyInput'];
+$E_email =$_POST['EmailInput'];
+$E_password =$_POST['P_passwordInput'];
+$E_cPassword =$_POST['C_passwordInput'];
+$E_fName =$_POST['Fname'];
+$E_lName =$_POST['Lname'];
+
+
+//Customer variables
+
+
+$C_fName =$_POST['Fname'];
+$C_lName =$_POST['Lname'];
+$C_phone =$_POST['PnumberInput'];
+$C_email =$_POST['EmailInput'];
+$C_adress =$_POST['AdressInput'];
+$C_postalcode =$_POST['PostalCodeInput'];
+$C_password =$_POST['Password'];
+
+
+
+
+require_once 'db_connection.php';
 
 $accountType = $_POST['account'];
 echo $accountType;

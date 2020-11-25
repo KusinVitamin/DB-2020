@@ -7,9 +7,9 @@
 	<a href="/~ollelv-8/php1/login.php">
     <p>Log In</p></a>
 </div>
-<div id="createAccount" href="/~ollelv-8/php1/Account_Choose.php">
+<div id="createAccount" href="/~ollelv-8/php1/CreateAccount.php">
     <p>Create Account</p>
-    <a href="/~ollelv-8/php1/Account_Choose.php">
+    <a href="/~ollelv-8/php1/CreateAccount.php">
     <p>Create new account</p></a>
 </div>
 <div id="logout" href="Logout.php">
