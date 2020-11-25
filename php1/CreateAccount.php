@@ -33,7 +33,7 @@ form {
 		<button type="submit">Start Page</button>
 	</form>
 
-<form method="POST" action="CreateAccount.php">
+<form method="POST" action="AccountCreated.php">
 First Name      <input type="text" name ="FnameInput" required> <br>
 Last Name       <input type="text" name ="LnameInput" required> <br>
 Phone number    <input type ="tel" name ="PnumberInput" > <br>

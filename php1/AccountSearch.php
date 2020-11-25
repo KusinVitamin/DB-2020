@@ -36,10 +36,10 @@ $query = ("SELECT * FROM `Customer` WHERE `Email` LIKE '$userName' AND `Password
 $result =mysqli_query($conn, $query);
 
 if(mysqli_num_rows($result) ===1){
-    echo "Login success!";
+    echo "Login success!<br><br>";
  }
  else{
-     echo "Login failed. Email or password incorrect";
+     echo "Login failed. Email or password incorrect.<br><br>";
  }
 
 
