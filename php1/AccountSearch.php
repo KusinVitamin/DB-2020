@@ -29,31 +29,12 @@ $accountType = $_POST['account'];
 echo $accountType;
 
 
-// e == employee else other statement
+// e == employee else other statement FÖr att bestämma location efter händelse =
 
 if($accountType == "e"){
     
   
-    if(mysqli_num_rows($result) === 1){
-        $row = mysqli_fetch_assoc($result);
-        
-        if($row['CompanyPassword'] === $companyPasswordInput){
-            $queryInsertEmployee = "INSERT INTO Employees (Email, Company, Fname, Lname, Password)
-                    VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
-            mysqliquery($conn, $queryInsertEmployee);
-            $feedbackString = "Employee account created.";
-        } else{
-            $feedbackString = "Incorrect company password.";
-        }
-    } else{
-        $queryInsertSupplierAndEmployee = "INSERT INTO Suppliers (SupplierName, CompanyPassword)
-                    VALUES ($companyInput, $companyPasswordInput)
-                    AND
-                    INSERT INTO Employees (Email, Company, Fname, Lname, Password)
-                    VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
-    }
-    
-    
+
     
     
 }
@@ -61,7 +42,7 @@ else{
     echo "Nu kollar den eftter customer CCCCCCCCCCC query";
 }
 
-
+header('Location:AssetListings.php');
 
 ?>
 </html>

@@ -44,10 +44,7 @@ form {
 
 
 $accountChoice = $_GET['create_account'];
-$nam = $_POST['account'];
-echo $accountChoice;
-echo $nam;
-echo "123";
+
 if($accountChoice == "employee"){
     ?>
     <form method="POST" action="AccountSearch.php">
@@ -88,7 +85,7 @@ if($accountChoice == "employee"){
     <?php 
     
     // Account creating for customer
-    echo "Customer";
+   
 }
 
 
