@@ -3,9 +3,6 @@ session_start();
 
 require_once 'db_connection.php';
 
-
-
-
 $inputEmail = $_POST['email'];
 $inputPassword = $_POST['password'];
 
