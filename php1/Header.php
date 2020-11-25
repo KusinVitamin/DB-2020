@@ -3,11 +3,14 @@
 <form id="searchForm" action="AssetListings.php"> 
     <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
 </form>
-<div id="login" href="Login.php">
-    <p>Log In</p>
+<div id="login" href="/~ollelv-8/php1/login.php">
+	<a href="/~ollelv-8/php1/login.php">
+    <p>Log In</p></a>
 </div>
-<div id="createAccount" href="CreateAccount.php">
+<div id="createAccount" href="/~ollelv-8/php1/Account_Choose.php">
     <p>Create Account</p>
+    <a href="/~ollelv-8/php1/Account_Choose.php">
+    <p>Create new account</p></a>
 </div>
 <div id="logout" href="Logout.php">
     <p>Log Out</p>

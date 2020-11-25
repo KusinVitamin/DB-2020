@@ -5,7 +5,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -25,37 +25,42 @@ session_start();
 require_once 'db_connection.php';
 
 
+$accountType = $_POST['account'];
+echo $accountType;
 
 
-$userName =$_POST['userName'];
-$password =$_POST['password'];
+// e == employee else other statement
 
-
-
-$query = ("SELECT * FROM `Customer` WHERE `Email` LIKE '$userName' AND `Password` LIKE '$password'");
+if($accountType == "e"){
     
-$result =mysqli_query($conn, $query);
-
-
-
-if(mysqli_num_rows($result) ===1){
-    
-    $row =mysqli_fetch_assoc($result);
-    
-
-    if($row['Email'] === $userName && $row['Password'] === $password);
-    {
-        //Session variable ,Account from the present shopper
-        $_SESSION['username_login'] = $row['Email'];
-       
-        header('Location:Start.php');
-    }
   
+    if(mysqli_num_rows($result) === 1){
+        $row = mysqli_fetch_assoc($result);
+        
+        if($row['CompanyPassword'] === $companyPasswordInput){
+            $queryInsertEmployee = "INSERT INTO Employees (Email, Company, Fname, Lname, Password)
+                    VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
+            mysqliquery($conn, $queryInsertEmployee);
+            $feedbackString = "Employee account created.";
+        } else{
+            $feedbackString = "Incorrect company password.";
+        }
+    } else{
+        $queryInsertSupplierAndEmployee = "INSERT INTO Suppliers (SupplierName, CompanyPassword)
+                    VALUES ($companyInput, $companyPasswordInput)
+                    AND
+                    INSERT INTO Employees (Email, Company, Fname, Lname, Password)
+                    VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
+    }
+    
+    
+    
+    
+}
+else{
+    echo "Nu kollar den eftter customer CCCCCCCCCCC query";
+}
 
- }
- else{
-     echo "Login failed. Email or password incorrect";
- }
 
 
 ?>

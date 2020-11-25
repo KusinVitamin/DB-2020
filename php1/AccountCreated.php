@@ -5,7 +5,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -14,7 +14,7 @@
 
 <body>
 <div data-include="Header"></div>
-<form method="get" action="/~erisal-8/php1/Start.php">
+<form method="get" action="/~ollelv-8/php1/Start.php">
     <button type="submit">Start Page</button>
 </form>
 

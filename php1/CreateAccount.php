@@ -6,7 +6,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -33,33 +33,68 @@ form {
 
 
 <body>
+
 <div data-include="Header"></div>
 	<form method="get" action="Start.php">
 		<button type="submit">Start Page</button>
 	</form>
 
-<form method="POST" action="AccountCreate.php">
-First Name      <input type="text" name ="FnameInput" required> <br>
-Last Name       <input type="text" name ="LnameInput" required> <br>
-Phone number    <input type ="tel" name ="PnumberInput" > <br>
-Email           <input type="text" name ="EmailInput" > <br> 
-Adress          <input type="text" name ="AdressInput" > <br> 
-Postal code  	<input type="text" name ="PostalCodeInput" > <br> 
-Sex             <input type="radio"id="male" name ="SexInput" value="M" required>
-	 			<label for="M">Male</label><br>
-	  			<input type="radio"id="female" name ="SexInput" value="F" required>
-	 			<label for="F">Female</label><br>  
-Date of birth   <input type="date" name ="DoBInput" required> <br> 
-Password  		<input type="password" name ="PasswordInput" required> <br> 
 
-<button type ="submit">Create account</button>
+<?php 
 
 
-
-
-
+$accountChoice = $_GET['create_account'];
+$nam = $_POST['account'];
+echo $accountChoice;
+echo $nam;
+echo "123";
+if($accountChoice == "employee"){
+    ?>
+    <form method="POST" action="AccountSearch.php">
+    <input type = "hidden" name ="account" value="e">
+    Company name:      <input type="text" name ="CompanyInput" required> <br>
+    Email:	           <input type="text" name ="EmailInput" required> <br>
+    Personal password: <input type ="password" name ="P_passwordInput" required> <br>
+    First name         <input type="text" name ="Fname" > <br>
+    Last name          <input type="text" name ="Lname" > <br>
+    
+   
+    <button type ="submit">Create account</button>
 
 </form>
+    
+    <?php 
+    // Account creating for Employee
+    
+    echo "Du valde göra en employee";
+}else {
+    
+    ?>
+    <form method="POST" action="AccountSearch.php">
+    <input type = "hidden" name ="account" value="c">
+    First name:     <input type="text" name ="Fname" required> <br>
+    Last name:	    <input type="text" name ="Lname" required> <br>
+    Phone number    <input type ="tel" name ="PnumberInput" > <br>
+    Email           <input type="text" name ="EmailInput" required> <br>
+    Adress          <input type="text" name ="AdressInput" required> <br>
+    Postal code  	<input type="text" name ="PostalCodeInput" > <br>
+    Password        <input type="password" name ="Password" required> <br>
+    Email password   <input type="password" name ="emailPasswordInput" required> <br>
+    <button type ="submit">Create account</button>
+    
+    </form>
+    
+    
+    <?php 
+    
+    // Account creating for customer
+    echo "Customer";
+}
+
+
+?>
+
+
 
 
 
