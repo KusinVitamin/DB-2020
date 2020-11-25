@@ -10,11 +10,9 @@
       $(this).load(file);
     });
   });
- 
+
 </script>
 </head>
-
-
 
 <body>
 <div data-include="Header"></div>
