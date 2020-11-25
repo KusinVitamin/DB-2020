@@ -46,7 +46,7 @@ form {
 if(isset($_POST['submitButton'])){
     
     $create_account= $_POST['create_account'];
-    if($create_account == "customer"){
+    if($create_account == "employee"){
         ?>
     <form method="POST" action="AccountSearch.php">
     <input type = "hidden" name ="account" value="e">
