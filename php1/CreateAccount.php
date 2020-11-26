@@ -92,12 +92,6 @@ if(!isset($_POST['submitButton'])){
 	</form> 
 <?php 
 }
-
-if(isset($_SESSION['feedbackString'])){
-	$feedbackString = $_SESSION['feedbackString'];
-	echo $feedbackString;
-	$_SESSION['feedbackString'] = "";
-}
 ?>
 
 </body>

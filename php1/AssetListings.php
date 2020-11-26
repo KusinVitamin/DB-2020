@@ -23,12 +23,6 @@ $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
 ?>
-
 <div data-include="Header"></div>
-<?php
-echo $_SESSION['feedbackString'];
-$_SESSION['feedbackString'] = "";
-?>
 </body>
-
 </html>
