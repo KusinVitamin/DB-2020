@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();

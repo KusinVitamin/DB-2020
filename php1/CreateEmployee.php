@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
@@ -39,7 +39,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
     if(mysqli_num_rows($resSuppliersExists) === 1){
 
-        $row = mysqli_fetch_assoc($result);
+        $row = mysqli_fetch_assoc($resSuppliersExists);
         
         if($row['CompanyPassword'] === $companyPasswordInput){
             $queryInsertEmployee = "INSERT INTO Employees (Email, Company, Fname, Lname, Password)

@@ -18,33 +18,17 @@
 <?php
 require_once 'db_connection.php';
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php
 
 //Assets written out
 
-$query =("SELECT * FROM Assets Order by AssetName ASC");
+$query = ("SELECT * 
+           FROM Assets 
+           ORDER BY AssetName ASC");
 
 
 $result = mysqli_query($conn,$query);
