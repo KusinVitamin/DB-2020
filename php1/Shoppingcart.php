@@ -31,6 +31,7 @@
 <?php
 // If the user clicked the add to cart button on the product page we can check for the form data
 if (isset($_POST['AssetName'], $_POST['quantity']) && is_numeric($_POST['AssetName']) && is_numeric($_POST['quantity'])) {
+    
     // Set the post variables so we easily identify them, also make sure they are integer
     $AssetName = (int)$_POST['AssetName'];
     $quantity = (int)$_POST['quantity'];
