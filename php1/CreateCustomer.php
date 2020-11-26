@@ -8,6 +8,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 session_start();
 $feedbackString = "";
 require_once 'db_connection.php';
+header('Location: CreateAccount.php');
 
 $fnameInput = "'" . $_POST['Fname'] . "'";
 $lnameInput = "'" . $_POST['Lname'] . "'";
@@ -31,6 +32,7 @@ $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
 	$feedbackString = "Email already in use.";
+	header('Location: CreateAccount.php');
 } else{
 	$queryInsertCustomer = "INSERT INTO Customers (Password)
         VALUES ($passwordInput);";
@@ -45,6 +47,10 @@ if(mysqli_num_rows($resEmailExists) === 1){
 	mysqli_query($conn, $queryInsertContactInfo);
 
     $feedbackString = "Account created.";
+    
 }
 $_SESSION['feedbackString'] = $feedbackString;
+header("Location: CreateAccount.php");
+
+
 ?>
