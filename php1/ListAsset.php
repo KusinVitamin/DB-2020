@@ -35,7 +35,7 @@
         Stock:	           <input type="text" name ="Stock" required> <br>
         Asset Price: <input type ="text" name ="Price" required> <br>
         Asset Image         <input type="text" name ="Picture" > <br>
-        <button type ="submit">Create account</button>
+        <button type ="submit">Submit Asset</button>
     </form>
 
     <?php
