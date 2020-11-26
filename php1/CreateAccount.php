@@ -25,9 +25,9 @@ form.Credentials {
 <body>
 <?php 
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     header("Location: Logout.php");
-}
+} else{
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 ?>
@@ -90,6 +90,7 @@ if(!isset($_POST['submitButton'])){
 	<input type="submit" name="submitButton" >
 	</form> 
 <?php 
+}
 }
 ?>
 

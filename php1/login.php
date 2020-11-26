@@ -16,9 +16,9 @@
 <body>
 <?php 
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 12020)) {
     header("Location: Logout.php");
-}
+} else{
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 ?>
@@ -42,5 +42,8 @@ $feedbackString = "";
 		</p>
  </form>
 
+<?php
+}
+?>
 </body>
 </html>
