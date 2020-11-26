@@ -1,37 +1,52 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(function(){
+    var includes = $('[data-include]');
+    jQuery.each(includes, function(){
+      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
+      $(this).load(file);
+    });
+  });
+  
+</script>
 </head>
 <body>
+<?php 
+session_start();
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+    header("Location: Logout.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+$feedbackString = "";
+?>
+
+<div data-include="Header"></div>
+
 
 <?php 
-echo "hej"; 
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time
-    session_destroy();   // destroy session data in storage
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
 
 session_start();
 require_once 'db_connection.php';
 
-$Search ="'". $_POST['SearchAsset'] ."'";
+$Search =$_GET['AssetSearch'];
 
 
 
 
 //Assets for requested words written out
 
-$query =("SELECT * FROM 'Assets' WHERE 'AssetName' LIKE = '%$Search%'");
+$query =("SELECT * FROM `Assets` WHERE `AssetName` LIKE '%$Search%'");
 
+$result = mysqli_query($conn,$query) or die(mysql_error());
 
-$result = mysqli_query($conn,$query);
-
-if(mysqli_num_rows($result)> 0)
-    {
-        while($row = mysqli_fetch_array($result)){
-            ?>
-            <table style="width: 3px;" border="3" cellpadding="4">
+if(mysqli_num_rows($result)> 0){
+    while($row = mysqli_fetch_array($result)){
+        ?>
+       		<div class="assetTable">
+            <table id= "Write_Asset" style="width: 3px;" border="3" cellpadding="4" background-color:333;>
             <tbody>
             <tr>
             <td><?php  echo "Product name ".$row['AssetName'];?>"</td>
@@ -39,7 +54,7 @@ if(mysqli_num_rows($result)> 0)
             <td><?php  echo "Stock: ". $row['Stock'] . "\r\n";?>&nbsp;</td>
             <td><?php  echo "Price: " .$row['AssetPrice'] . "$ \r\n";?>&nbsp;</td>
             <td><?php  echo  "<img src='{$row['AssetImage']}'"?> </td>
-      		
+      	
       		
       		
       		<?php 
@@ -68,19 +83,18 @@ if(mysqli_num_rows($result)> 0)
 		
             </tr>
             </tbody>
-            </table>
+ </table>
+ </div>
            <?php 
       
         
-        }
+        
       
         
-    }
-    else{
-        header('Location: AssetListings.php');
-    }
-    
-   
+      }
+}   else{
+    echo "Du hittade inget";
+}
    
 ?>
 
