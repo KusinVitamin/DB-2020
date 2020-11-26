@@ -6,7 +6,7 @@
         $(function(){
             var includes = $('[data-include]');
             jQuery.each(includes, function(){
-                var file = '/~kemhua-6/php1/' + $(this).data('include') + '.php';
+                var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
                 $(this).load(file);
             });
         });
@@ -25,6 +25,16 @@
 </head>
 
 <body>
+<?php
+session_start();
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+    header("Location: Logout.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+$feedbackString = "";
+require_once 'db_connection.php';
+?>
+
 <div data-include="Header"></div>
 
 
@@ -35,7 +45,7 @@
         Stock:	           <input type="text" name ="Stock" required> <br>
         Asset Price: <input type ="text" name ="Price" required> <br>
         Asset Image         <input type="text" name ="Picture" > <br>
-        <button type ="submit">Create account</button>
+        <button type ="submit">Submit Asset</button>
     </form>
 
     <?php

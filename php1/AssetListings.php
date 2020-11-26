@@ -6,7 +6,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -14,6 +14,7 @@
 </script>
 </head>
 <body>
+
 <?php
 require_once 'db_connection.php';
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
@@ -22,8 +23,16 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     session_destroy();   // destroy session data in storage
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+
+<?php 
+
 session_start();
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+    header("Location: Logout.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
+
 
 
 
@@ -109,6 +118,9 @@ if(mysqli_num_rows($result)> 0)
 
 
 
+
+require_once 'db_connection.php';
+
 ?>
 
 
@@ -120,6 +132,10 @@ if(mysqli_num_rows($result)> 0)
 
 
 <div data-include="Header"></div>
+<?php
+echo $_SESSION['feedbackString'];
+$_SESSION['feedbackString'] = "";
+?>
 </body>
 
 </html>

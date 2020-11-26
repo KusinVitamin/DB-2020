@@ -6,7 +6,7 @@
         $(function(){
             var includes = $('[data-include]');
             jQuery.each(includes, function(){
-                var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
+                var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
                 $(this).load(file);
             });
         });
