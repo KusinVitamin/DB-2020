@@ -1,13 +1,9 @@
 <?php
 session_start();
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
-    session_start();
-    $_SESSION['feedbackString'] = "You were logged out.";
+    header("Location: Logout.php");
 }
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+$_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
 ?>
@@ -16,7 +12,6 @@ require_once 'db_connection.php';
     <form id="searchForm" action="AssetListings.php"> 
         <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
     </form>
-<<<<<<< HEAD
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
@@ -65,27 +60,6 @@ require_once 'db_connection.php';
         }
     }
     ?>
-=======
-    <a href="/~ollelv-8/php1/login.php">
-    <div id="login">
-        Log In
-    </div>
-    </a>
-    <a href="/~ollelv-8/php1/CreateAccount.php">
-    <div id="createAccount">
-        Create Account
-    </div>
-    </a>
-    <a href="/~ollelv-8/php1/Logout.php">
-    <div id="logout">
-        Log Out
-    </div>
-     <a href="/~ollelv-8/php1/ListAsset.php">
-     <div id="logout">
-        List Asset
-     </div>
-    </a>
->>>>>>> b7d01fbbf1b61d1c7bee90369b9cf4d170b00bfc
     <a id="cartIcon" href="Shoppingcart.php">
         <img src="cart.png" width="70" height="70">
     </a>
@@ -165,7 +139,7 @@ a{
 /*----------------------------------------------*/
 #login, #createAccount, #logout, #listAsset{
     display: inline-block;
-    width: 70px;
+    width: 75px;
     padding: 2px 0;
     background-color: coral;
     border-radius: 5px;
@@ -177,7 +151,7 @@ a{
     font-weight: 1000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-#createAccount, #listAsset{
+#createAccount{
     margin: 10px 5px;
 }
 #login p, #createAccount p, #logout p, #listAsset p{

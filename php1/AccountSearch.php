@@ -1,13 +1,9 @@
 <?php 
 session_start();
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
-    session_start();
-    $_SESSION['feedbackString'] = "You were logged out.";
+    header("Location: Logout.php");
 }
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+$_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
 
@@ -33,7 +29,11 @@ if(mysqli_num_rows($resEmailExists) === 1){
 			               FROM ContactInfo AS Con 
 			               INNER JOIN Customers AS Cus 
 			               ON Con.CustomerID = Cus.CustomerID
-			               WHERE Con.Email = $inputEmail AND Cus.Password = $inputPassword";
+                           WHERE Con.Email = $inputEmail AND Cus.Password = $inputPassword
+                           UNION
+                           SELECT Emp.Email
+                           FROM Employees AS Emp
+                           WHERE Emp.Email = $inputEmail AND Emp.Password = $inputPassword";
 	
 	$resPasswordCheck = mysqli_query($conn, $queryPasswordCheck);
 
@@ -42,6 +42,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
 		$feedbackString = "Login success!";
 	} else {
         $feedbackString = "Incorrect password.";
+        header('Location: Login.php');
     }	
 } else{
     $feedbackString = "Email not registered.";

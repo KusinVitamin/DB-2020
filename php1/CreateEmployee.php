@@ -1,13 +1,9 @@
 <?php
 session_start();
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
-    session_start();
-    $_SESSION['feedbackString'] = "You were logged out.";
+    header("Location: Logout.php");
 }
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+$_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
 
