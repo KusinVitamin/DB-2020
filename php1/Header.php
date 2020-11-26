@@ -1,8 +1,10 @@
 <div id="header">
-    <a id="title" href="AssetListings.php">Marketplace</a>
-    <form id="searchForm" action="AssetListings.php"> 
+	<a href="/~ollelv-8/php1/SearchAsset.php">
+   
+    <form id="searchForm" action="AssetListings.php" method ="get"> 
         <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
     </form>
+    </a>
     <a href="/~ollelv-8/php1/login.php">
     <div id="login">
         Log In
@@ -138,4 +140,9 @@ a{
     -webkit-filter: brightness(70%);
     -webkit-transition: all 0.2s ease;
 }
+
+.assetTable{
+
+   background-color: #333;
+
 </style>

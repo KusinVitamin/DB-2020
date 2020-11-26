@@ -58,7 +58,7 @@ if(isset($_POST['submitButton'])){
 	<?php 
 	// Account creating for Employee
 
-	echo "Du valde att gÃ¶ra en employee.";
+	echo "Du valde att göra en employee.";
 	}else {
 	?>
     <form class="Credentials" method="POST" action="CreateCustomer.php">
