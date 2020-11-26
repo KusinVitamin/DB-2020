@@ -40,7 +40,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
     $resSuppliersExists = mysqli_query($conn, $querySuppliersExists);
 
     if(mysqli_num_rows($resSuppliersExists) === 1){
-        echo "Supplier exists.";
+        
         $row = mysqli_fetch_assoc($result);
         
         if($row['CompanyPassword'] === $companyPasswordInput){
@@ -52,7 +52,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
             $feedbackString = "Incorrect company password.";
         }
     } else{
-        echo "Insert supplier.";
+        
         $queryInsertSupplier = "INSERT INTO Suppliers (SupplierName, CompanyPassword)
                                 VALUES ($companyInput, $companyPasswordInput);";
 
