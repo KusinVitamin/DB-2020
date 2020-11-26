@@ -1,8 +1,8 @@
 <?php 
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     header("Location: Logout.php");
-}
+} else{
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
@@ -13,14 +13,14 @@ $inputPassword = "'" . $_POST['password'] . "'";
 
 
 $queryEmailExists = "SELECT Con.Email
-FROM ContactInfo AS Con 
-INNER JOIN Customers AS Cus 
-ON Con.CustomerID = Cus.CustomerID
-WHERE Con.Email = $inputEmail
-UNION
-SELECT Emp.Email
-FROM Employees AS Emp
-WHERE Emp.Email = $inputEmail";
+                     FROM ContactInfo AS Con 
+                     INNER JOIN Customers AS Cus 
+                     ON Con.CustomerID = Cus.CustomerID
+                     WHERE Con.Email = $inputEmail
+                     UNION
+                     SELECT Emp.Email
+                     FROM Employees AS Emp
+                     WHERE Emp.Email = $inputEmail";
 
 $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
@@ -39,15 +39,16 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
 	if(mysqli_num_rows($resPasswordCheck) === 1){
 		$_SESSION['email'] = $inputEmail;
-		$feedbackString = "Login success!";
+        $feedbackString = "Login success!";
+        header("Location: AssetListings.php");
 	} else {
         $feedbackString = "Incorrect password.";
         header('Location: Login.php');
     }	
 } else{
     $feedbackString = "Email not registered.";
-
+    header('Location: Login.php');
 }
 $_SESSION['feedbackString'] = $feedbackString;
-header("Location: AssetListings.php");
+}
 ?>

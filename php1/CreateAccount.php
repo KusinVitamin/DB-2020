@@ -25,9 +25,9 @@ form.Credentials {
 <body>
 <?php 
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     header("Location: Logout.php");
-}
+} else{
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 ?>
@@ -56,7 +56,6 @@ if(isset($_POST['submitButton'])){
 	<?php 
 	// Account creating for Employee
 
-	echo "Du valde att g�ra en employee.";
 	}else {
 	?>
     <form class="Credentials" method="POST" action="CreateCustomer.php">
@@ -91,6 +90,7 @@ if(!isset($_POST['submitButton'])){
 	<input type="submit" name="submitButton" >
 	</form> 
 <?php 
+}
 }
 ?>
 

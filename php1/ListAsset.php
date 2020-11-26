@@ -27,9 +27,9 @@
 <body>
 <?php
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     header("Location: Logout.php");
-}
+} else{
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
@@ -41,17 +41,15 @@ require_once 'db_connection.php';
     <form class="CredentialsForm" method="POST" action="CreateAsset.php">
         <input type = "hidden" name ="account" value="e">
         Asset Name:      <input type="text" name ="AssetName" required> <br>
-        Company Name:  <input type="text" name ="CompanyName" required> <br>
         Stock:	           <input type="text" name ="Stock" required> <br>
         Asset Price: <input type ="text" name ="Price" required> <br>
-        Asset Image         <input type="text" name ="Picture" > <br>
+        Asset Image         <input type="text" name ="Image" > <br>
         <button type ="submit">Submit Asset</button>
     </form>
 
-    <?php
 
-
+<?php
+}
 ?>
-
 </body>
 </html>

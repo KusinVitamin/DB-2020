@@ -1,8 +1,9 @@
 <?php
 session_start();
-if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     header("Location: Logout.php");
-}
+} else{
+
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
@@ -15,7 +16,11 @@ require_once 'db_connection.php';
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
+
         <a href="/~ollelv-8/php1/login.php">
+
+        <a href="/~erisal-8/php1/Login.php">
+
         <div id="login">
             Log In
         </div>
@@ -197,3 +202,6 @@ a{
     -webkit-transition: all 0.2s ease;
 }
 </style>
+<?php
+}
+?>
