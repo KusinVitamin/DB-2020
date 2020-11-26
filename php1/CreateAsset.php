@@ -1,11 +1,14 @@
 <?php
 session_start();
-
-$emailInput =  isset($_SESSION['email']) ? $_SESSION['email'] : array();
-$employee = array();
-
+$feedbackString = "";
 require_once 'db_connection.php';
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+    header("Location: Logout.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 
+
+$email = $_SESSION['email'];
 
 
 $nameInput = "'" . $_POST['AssetName'] . "'";
@@ -14,15 +17,16 @@ $priceInput = "'" . $_POST['Price'] . "'";
 $pictureInput = "'" . $_POST['Picture'] . "'";
 
 
-$employeeCompany = "SELECT Company
+$employeeCompany = "SELECT SupplierName
                    FROM Employees
-                   WHERE Email = $emailInput;";
+                   WHERE Email = $email;";
 
 $queryInsertAsset = "INSERT INTO Assets (AssetName, SupplierName, Stock, AssetPrice, AssetImage)
           VALUES ($nameInput, $employeeCompany, $stockInput, $priceInput, $pictureInput);";
         mysqli_query($conn, $queryInsertAsset);
         echo $nameInput, $employeeCompany, $stockInput, $priceInput, $pictureInput;
         $feedbackString = "New asset created.";
+
 
 
 ?>
