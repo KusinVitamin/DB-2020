@@ -1,11 +1,13 @@
 <?php
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
+session_start();
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time 
     session_destroy();   // destroy session data in storage
+    session_start();
+    $_SESSION['feedbackString'] = "You were logged out.";
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-session_start();
 $feedbackString = "";
 require_once 'db_connection.php';
 
@@ -40,7 +42,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
     $resSuppliersExists = mysqli_query($conn, $querySuppliersExists);
 
     if(mysqli_num_rows($resSuppliersExists) === 1){
-        
+
         $row = mysqli_fetch_assoc($result);
         
         if($row['CompanyPassword'] === $companyPasswordInput){

@@ -6,7 +6,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -15,13 +15,15 @@
 
 <body>
 <?php 
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
+session_start();
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     // last request was more than 30 minutes ago
     session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
+	session_destroy();   // destroy session data in storage
+	session_start();
+    $_SESSION['feedbackString'] = "You were logged out.";
 }
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-session_start();
 $feedbackString = "";
 ?>
 
@@ -48,6 +50,7 @@ $feedbackString = "";
 if($_SESSION['feedbackString']){
 	$feedbackString = $_SESSION['feedbackString'];
 	echo $feedbackString;
+	$_SESSION['feedbackString'] = "";
 }
 ?>
 
