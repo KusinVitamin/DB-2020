@@ -15,7 +15,7 @@ require_once 'db_connection.php';
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/login.php">
+        <a href="/~ollelv-8/php1/login.php">
         <div id="login">
             Log In
         </div>
@@ -24,7 +24,7 @@ require_once 'db_connection.php';
     } 
     if(!isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/CreateAccount.php">
+        <a href="/~ollelv-8/php1/CreateAccount.php">
         <div id="createAccount">
             Create Account
         </div>
@@ -33,7 +33,7 @@ require_once 'db_connection.php';
     } 
     if(isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/Logout.php">
+        <a href="/~ollelv-8/php1/Logout.php">
         <div id="logout">
             Log Out
         </div>
@@ -51,7 +51,7 @@ require_once 'db_connection.php';
 
         if(mysqli_num_rows($resCheckEmployee) === 1){
             ?>
-            <a href="/~erisal-8/php1/ListAsset.php">
+            <a href="/~ollelv-8/php1/ListAsset.php">
             <div id="listAsset">
                 List Asset
             </div>
