@@ -2,14 +2,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  $(function(){
-    var includes = $('[data-include]');
-    jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
-      $(this).load(file);
-    });
-  });
-  
+
 </script>
 </head>
 <body>
@@ -27,8 +20,8 @@ $feedbackString = "";
 
 <?php 
 
-
-
+echo "hej";
+session_start();
 require_once 'db_connection.php';
 
 $Search =$_GET['AssetSearch'];
@@ -101,6 +94,6 @@ if(mysqli_num_rows($result)> 0){
     
 
 
-
+</body>
 
 </html>

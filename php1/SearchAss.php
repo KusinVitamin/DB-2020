@@ -1,45 +1,45 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+</script>
 </head>
 <body>
-
 <?php 
 session_start();
-
-require_once 'db_connection.php';
-//Checks if asset is added to chart
-
-
-if (!isset($_SESSION['username_login'])):
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+    header("Location: Logout.php");
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+$feedbackString = "";
 ?>
- <form method="get" action="CreateAccount.php">
-    <button type="submit">Create account</button>
-</form>
 
-<form method="get" action="login.php">
-    <button type="submit">Log in</button>
-</form>
-<?php else: ?>
-<span class="menu-item">Welcome <?php echo $_SESSION['username_login']; ?> Login Success <br> <form method="get" action="Logut.php">
-    <button type="submit">Log out</button>
-</form></span>
-<?php endif; ?>
+<div data-include="Header"></div>
+
 
 <?php 
 
+echo "hej";
+session_start();
+require_once 'db_connection.php';
 
-//Assets written out
-
-$query =("SELECT * FROM Assets Order by AssetName ASC");
+$Search =$_GET['AssetSearch'];
 
 
-$result = mysqli_query($conn,$query);
 
-if(mysqli_num_rows($result)> 0)
-    {
-        while($row = mysqli_fetch_array($result)){
-            ?>
-            <table style="width: 3px;" border="3" cellpadding="4">
+
+//Assets for requested words written out
+
+$query =("SELECT * FROM `Assets` WHERE `AssetName` LIKE '%$Search%'");
+
+$result = mysqli_query($conn,$query) or die(mysql_error());
+
+if(mysqli_num_rows($result)> 0){
+    while($row = mysqli_fetch_array($result)){
+        ?>
+       		<div class="assetTable">
+            <table id= "Write_Asset" style="width: 3px;" border="3" cellpadding="4" background-color:333;>
             <tbody>
             <tr>
             <td><?php  echo "Product name ".$row['AssetName'];?>"</td>
@@ -47,7 +47,7 @@ if(mysqli_num_rows($result)> 0)
             <td><?php  echo "Stock: ". $row['Stock'] . "\r\n";?>&nbsp;</td>
             <td><?php  echo "Price: " .$row['AssetPrice'] . "$ \r\n";?>&nbsp;</td>
             <td><?php  echo  "<img src='{$row['AssetImage']}'"?> </td>
-      		
+      	
       		
       		
       		<?php 
@@ -76,22 +76,24 @@ if(mysqli_num_rows($result)> 0)
 		
             </tr>
             </tbody>
-            </table>
+ </table>
+ </div>
            <?php 
       
         
-        }
+        
       
         
-    }
-    
-   
+      }
+}   else{
+    echo "Du hittade inget";
+}
    
 ?>
 
     
 
 
-
+</body>
 
 </html>

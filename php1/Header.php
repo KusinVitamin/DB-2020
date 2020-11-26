@@ -10,8 +10,8 @@ require_once 'db_connection.php';
 ?>
 <div id="header">
     <a id="title" href="AssetListings.php">Marketplace</a>
-    <form id="searchForm" action="AssetListings.php"> 
-        <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
+    <form id="searchForm" method="get" action="SearchAsset.php"> 
+        <input id="searchBox" type="text" name="AssetSearch" placeholder="Search for ess assets..."><input id="searchButton" type="submit" value="Search">
     </form>
     <?php 
     if(!isset($_SESSION['email'])){
