@@ -16,11 +16,7 @@ require_once 'db_connection.php';
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
-
-        <a href="/~ollelv-8/php1/login.php">
-
         <a href="/~erisal-8/php1/Login.php">
-
         <div id="login">
             Log In
         </div>
@@ -29,7 +25,7 @@ require_once 'db_connection.php';
     } 
     if(!isset($_SESSION['email'])){
         ?>
-        <a href="/~ollelv-8/php1/CreateAccount.php">
+        <a href="/~erisal-8/php1/CreateAccount.php">
         <div id="createAccount">
             Create Account
         </div>
@@ -38,14 +34,12 @@ require_once 'db_connection.php';
     } 
     if(isset($_SESSION['email'])){
         ?>
-        <a href="/~ollelv-8/php1/Logout.php">
+        <a href="/~erisal-8/php1/Logout.php">
         <div id="logout">
             Log Out
         </div>
         </a>
-    <?php
-    }
-    if(isset($_SESSION['email'])){
+        <?php
         $emailString = $_SESSION['email'];
         
         $queryCheckEmployee = "SELECT Email
@@ -56,9 +50,14 @@ require_once 'db_connection.php';
 
         if(mysqli_num_rows($resCheckEmployee) === 1){
             ?>
-            <a href="/~ollelv-8/php1/ListAsset.php">
+            <a href="/~erisal-8/php1/ListAsset.php">
             <div id="listAsset">
                 List Asset
+            </div>
+            </a>
+            <a href="/~erisal-8/php1/ManageAssets.php">
+            <div id="manageAssets">
+                Manage Assets
             </div>
             </a>
         <?php
@@ -162,7 +161,7 @@ a{
     -webkit-transition: all 0.2s ease;
 }
 /*----------------------------------------------*/
-#login, #createAccount, #logout, #listAsset{
+#login, #createAccount, #logout, #listAsset, #manageAssets{
     display: inline-block;
     width: 75px;
     padding: 2px 0;
@@ -176,16 +175,16 @@ a{
     font-weight: 1000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-#createAccount{
+#createAccount, #manageAssets{
     margin: 10px 5px;
 }
-#login p, #createAccount p, #logout p, #listAsset p{
+#login p, #createAccount p, #logout p, #listAsset p, #manageAssets p{
     line-height: 1.5;
     display: inline-block;
     vertical-align: middle;
     
 }
-#login:hover, #createAccount:hover, #logout:hover, #listAsset:hover{
+#login:hover, #createAccount:hover, #logout:hover, #listAsset:hover, #manageAssets:hover{
     cursor: pointer; 
     -webkit-filter: brightness(70%);
     -webkit-transition: all 0.2s ease;
