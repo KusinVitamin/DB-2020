@@ -1,5 +1,4 @@
 <html>
-
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -21,17 +20,16 @@ form.Credentials {
 }
 </style>
 </head>
-
 <body>
 <?php 
 session_start();
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 ?>
-
+<!-------------------------------------->
 <div data-include="Header"></div>
 
 <?php 

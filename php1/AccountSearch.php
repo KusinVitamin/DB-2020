@@ -1,16 +1,14 @@
 <?php 
 session_start();
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
 require_once 'db_connection.php';
-
+#########################################
 $inputEmail = "'" . $_POST['email'] . "'";
 $inputPassword = "'" . $_POST['password'] . "'";
-
-
 
 $queryEmailExists = "SELECT Con.Email
 FROM ContactInfo AS Con 
