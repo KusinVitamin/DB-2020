@@ -3,6 +3,7 @@
     <form id="searchForm" action="AssetListings.php"> 
         <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
     </form>
+<<<<<<< HEAD
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
@@ -51,6 +52,27 @@
         }
     }
     ?>
+=======
+    <a href="/~ollelv-8/php1/login.php">
+    <div id="login">
+        Log In
+    </div>
+    </a>
+    <a href="/~ollelv-8/php1/CreateAccount.php">
+    <div id="createAccount">
+        Create Account
+    </div>
+    </a>
+    <a href="/~ollelv-8/php1/Logout.php">
+    <div id="logout">
+        Log Out
+    </div>
+     <a href="/~ollelv-8/php1/ListAsset.php">
+     <div id="logout">
+        List Asset
+     </div>
+    </a>
+>>>>>>> b7d01fbbf1b61d1c7bee90369b9cf4d170b00bfc
     <a id="cartIcon" href="Shoppingcart.php">
         <img src="cart.png" width="70" height="70">
     </a>

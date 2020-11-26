@@ -6,7 +6,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -45,10 +45,9 @@ $feedbackString = "";
  </form>
 
 <?php
-if(isset($_SESSION['feedbackString'])){
+if($_SESSION['feedbackString']){
 	$feedbackString = $_SESSION['feedbackString'];
 	echo $feedbackString;
-	$_SESSION['feedbackString'] = "";
 }
 ?>
 
