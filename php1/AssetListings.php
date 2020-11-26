@@ -45,43 +45,19 @@ if(mysqli_num_rows($result)> 0){
             <td><?php  echo "Stock: ". $row['Stock'] . "\r\n";?>&nbsp;</td>
             <td><?php  echo "Price: " .$row['AssetPrice'] . "$ \r\n";?>&nbsp;</td>
             <td><?php  echo  "<img src='{$row['AssetImage']}'"?> </td>
-      	
-      		
-      		
-      		<?php 
-      		
-      		
-      		?>
-      
-      <!--  Quantity form -->   
-         
-        <form method="post" action="Grading.php">
-  		<label for="quantity">Quantity (between 1 and 100):</label>
-  		<input type="number" id="quantity" name="quantity" min="1" max="100">
-  		<input type="submit" name="add_to_cart">
-		</form>
-		
-		
-	<!--  Grading form -->
-		
-		<form method="post" action="/action_page.php">
- 		<label for="Grading">Grade product (between 1 and 5):</label>
-  		<input type="range" id="grading" name="grading" min="0" max="5" oninput="this.nextElementSibling.value = this.value">
-		<output>3</output>
-  		<input type="submit">
-		</form>
-		
-		
+            <td>       
+            <form method="post" action="EditCart.php">
+  		      <label for="Quantity">Quantity:</label>
+  		      <input type="number" id="Quantity" name="Quantity" min="1" value="1">
+            <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
+  		      <input type="submit" name="add_to_cart">
+		        </form>
+            </td>
             </tr>
             </tbody>
- </table>
- </div>
+            </table>
+          </div>
            <?php 
-      
-        
-        
-      
-        
       }
 }
 }
