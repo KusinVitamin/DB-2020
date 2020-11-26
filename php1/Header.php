@@ -17,6 +17,10 @@
     <div id="logout">
         Log Out
     </div>
+     <a href="/~erisal-8/php1/ListAsset.php">
+     <div id="logout">
+        List Asset
+     </div>
     </a>
     <a id="cartIcon" href="Shoppingcart.php">
         <img src="cart.png" width="70" height="70">
