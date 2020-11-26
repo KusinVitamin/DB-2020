@@ -20,7 +20,7 @@ SELECT Emp.Email
 FROM Employees AS Emp
 WHERE Emp.Email = $inputEmail";
 
-$resEmailExists = mysqliquery($conn, $queryEmailExists);
+$resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
 	$feedbackString = "Email already in use.";
@@ -28,14 +28,14 @@ if(mysqli_num_rows($resEmailExists) === 1){
 	$queryInsertCustomer = "INSERT INTO Customers (Password)
         VALUES ($passwordInput);";
 	
-	mysqliquery($conn, $queryInsertCustomer);
+	mysqli_query($conn, $queryInsertCustomer);
 	
 	$queryInsertContactInfo = "INSERT INTO ContactInfo (CustomerID, Fname, Lname, Pnumber, Email, Address, PostalCode)
 			SELECT CustomerID, $Fname, $Lname, $Pnumber, $Email, $Address, $PostalCode
 			FROM Customers 
 			WHERE Password = $inputPassword;
 
-	mysqliquery($conn, $queryInsertContactInfo);
+	mysqli_query($conn, $queryInsertContactInfo);
 
     $feedbackString = "Account created.";
 }

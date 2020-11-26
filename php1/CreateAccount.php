@@ -86,9 +86,9 @@ if(isset($_POST['submitButton'])){
 if(!isset($_POST['submitButton'])){
     ?>
     <form class="Credentials" action="" method="post" >
-	<input type="radio" id="employee" name="create_account" value="employee">
+	<input type="radio" id="employee" name="create_account" value="employee" required>
 	<label for="male">Create employee account</label><br>
-	<input type="radio" id="customer" name="create_account" value="customer">
+	<input type="radio" id="customer" name="create_account" value="customer" required>
 	<label for="customer">Create customer account</label><br>
 	<input type="submit" name="submitButton" >
 	</form> 
@@ -98,6 +98,7 @@ if(!isset($_POST['submitButton'])){
 if(isset($_SESSION['feedbackString'])){
 	$feedbackString = $_SESSION['feedbackString'];
 	echo $feedbackString;
+	$_SESSION['feedbackString'] = "";
 }
 ?>
 

@@ -9,8 +9,8 @@ session_start();
 $feedbackString = "";
 require_once 'db_connection.php';
 
-$inputEmail = $_POST['email'];
-$inputPassword = $_POST['password'];
+$inputEmail = "'" . $_POST['email'] . "'";
+$inputPassword = "'" . $_POST['password'] . "'";
 
 
 
@@ -24,7 +24,7 @@ SELECT Emp.Email
 FROM Employees AS Emp
 WHERE Emp.Email = $inputEmail";
 
-$resEmailExists = mysqliquery($conn, $queryEmailExists);
+$resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
 	$queryPasswordCheck = "SELECT Con.Email
@@ -33,7 +33,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
 			               ON Con.CustomerID = Cus.CustomerID
 			               WHERE Con.Email = $inputEmail AND Cus.Password = $inputPassword";
 	
-	$resPasswordCheck = mysqliquery($conn, $queryPasswordCheck);
+	$resPasswordCheck = mysqli_query($conn, $queryPasswordCheck);
 
 	if(mysqli_num_rows($resPasswordCheck) === 1){
 		$_SESSION['email'] = $inputEmail;

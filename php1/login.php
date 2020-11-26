@@ -50,6 +50,7 @@ $feedbackString = "";
 if(isset($_SESSION['feedbackString'])){
 	$feedbackString = $_SESSION['feedbackString'];
 	echo $feedbackString;
+	$_SESSION['feedbackString'] = "";
 }
 ?>
 
