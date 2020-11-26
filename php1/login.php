@@ -30,9 +30,7 @@ $feedbackString = "";
 
 <form action ="AccountSearch.php" method="POST">
 		<p>
-		<label>Email: </label>
-
-		<input type ="text" id="userName" name="emailInput" required>		
+		<label>Email: </label>	
 
 		<input type ="text" id="email" name="email" required>		
 

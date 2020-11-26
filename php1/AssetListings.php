@@ -23,6 +23,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 session_start();
 $feedbackString = "";
+require_once 'db_connection.php';
 ?>
 
 <div data-include="Header"></div>
