@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
@@ -48,14 +48,6 @@ if(mysqli_num_rows($resEmailExists) === 1){
     $feedbackString = "Email not registered.";
 
 }
-
-
 $_SESSION['feedbackString'] = $feedbackString;
 header("Location: AssetListings.php");
-
-
-
-$_SESSION['feedbackString'] = $feedbackString;
-header('Location: CreatAccount');
-
 ?>

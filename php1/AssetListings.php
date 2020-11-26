@@ -14,24 +14,16 @@
 </script>
 </head>
 <body>
-
+<div data-include="Header"></div>
 <?php
 require_once 'db_connection.php';
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-
-<?php 
-
 session_start();
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 $feedbackString = "";
+?>
 
 
 
@@ -48,8 +40,7 @@ $feedbackString = "";
 
 
 
-
-
+<?php
 
 //Assets written out
 
@@ -58,8 +49,7 @@ $query =("SELECT * FROM Assets Order by AssetName ASC");
 
 $result = mysqli_query($conn,$query);
 
-if(mysqli_num_rows($result)> 0)
-{
+if(mysqli_num_rows($result)> 0){
     while($row = mysqli_fetch_array($result)){
         ?>
        		<div class="assetTable">
@@ -105,23 +95,11 @@ if(mysqli_num_rows($result)> 0)
            <?php 
       
         
-        }
+        
       
         
-    }
-    
-   
-
-
-
-
-
-
-
-
-require_once 'db_connection.php';
-
+      }
+}
 ?>
-<div data-include="Header"></div>
 </body>
 </html>

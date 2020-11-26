@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)) {
+if(isset($_SESSION['email']) && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 5)){
     header("Location: Logout.php");
 }
 $_SESSION['LAST_ACTIVITY'] = time();
@@ -8,33 +8,10 @@ $feedbackString = "";
 require_once 'db_connection.php';
 ?>
 <div id="header">
-	<a href="/~ollelv-8/php1/SearchAsset.php">
-   
-    <form id="searchForm" action="AssetListings.php" method ="get"> 
+    <a id="title" href="AssetListings.php">Marketplace</a>
+    <form id="searchForm" action="AssetListings.php"> 
         <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
     </form>
-
-    </a>
-    <a href="/~ollelv-8/php1/login.php">
-    <div id="login">
-        Log In
-    </div>
-    </a>
-    <a href="/~ollelv-8/php1/CreateAccount.php">
-    <div id="createAccount">
-        Create Account
-    </div>
-    </a>
-    <a href="/~ollelv-8/php1/Logout.php">
-    <div id="logout">
-        Log Out
-    </div>
-     <a href="/~ollelv-8/php1/ListAsset.php">
-     <div id="logout">
-        List Asset
-     </div>
-    </a>
-
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
@@ -83,7 +60,6 @@ require_once 'db_connection.php';
         }
     }
     ?>
-
     <a id="cartIcon" href="Shoppingcart.php">
         <img src="cart.png" width="70" height="70">
     </a>
@@ -220,9 +196,4 @@ a{
     -webkit-filter: brightness(70%);
     -webkit-transition: all 0.2s ease;
 }
-
-.assetTable{
-
-   background-color: #333;
-
 </style>
