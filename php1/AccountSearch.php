@@ -39,15 +39,15 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
 	if(mysqli_num_rows($resPasswordCheck) === 1){
 		$_SESSION['email'] = $inputEmail;
-		$feedbackString = "Login success!";
+        $feedbackString = "Login success!";
+        header("Location: AssetListings.php");
 	} else {
         $feedbackString = "Incorrect password.";
         header('Location: Login.php');
     }	
 } else{
     $feedbackString = "Email not registered.";
-
+    header('Location: Login.php');
 }
 $_SESSION['feedbackString'] = $feedbackString;
-header("Location: AssetListings.php");
 ?>

@@ -29,7 +29,8 @@ $queryEmailExists = "SELECT Con.Email
 $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
-	$feedbackString = "Email already in use.";
+    $feedbackString = "Email already in use.";
+    header("Location: CreateAccount.php");
 } else{
     $querySuppliersExists = "SELECT CompanyPassword
                              FROM Suppliers
@@ -40,14 +41,16 @@ if(mysqli_num_rows($resEmailExists) === 1){
     if(mysqli_num_rows($resSuppliersExists) === 1){
 
         $row = mysqli_fetch_assoc($resSuppliersExists);
-        
-        if($row['CompanyPassword'] === $companyPasswordInput){
+
+        if(("'" . $row['CompanyPassword'] . "'") === $companyPasswordInput){
             $queryInsertEmployee = "INSERT INTO Employees (Email, Company, Fname, Lname, Password)
                                     VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
             mysqli_query($conn, $queryInsertEmployee);
             $feedbackString = "Employee account created.";
+            header('Location: AssetListings.php');
         } else{
             $feedbackString = "Incorrect company password.";
+            header('Location: CreateAccount.php');
         }
     } else{
         
@@ -62,11 +65,8 @@ if(mysqli_num_rows($resEmailExists) === 1){
         mysqli_query($conn, $queryInsertEmployee);
 
         $feedbackString = "Employee account created. (New supplier)";
+        header('Location: AssetListings.php');
     }
 }
 $_SESSION['feedbackString'] = $feedbackString;
-
-
-header('Location: CreateAccount.php');
-
 ?>

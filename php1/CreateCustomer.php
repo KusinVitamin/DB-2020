@@ -29,7 +29,7 @@ $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
 	$feedbackString = "Email already in use.";
-	header('Location: CreateAccount.php');
+	header("Location: CreateAccount.php");
 } else{
 	$queryInsertCustomer = "INSERT INTO Customers (Password)
         					VALUES ($passwordInput);";
@@ -42,9 +42,8 @@ if(mysqli_num_rows($resEmailExists) === 1){
 							   WHERE Password = $passwordInput";
 
 	mysqli_query($conn, $queryInsertContactInfo);
-    $feedbackString = "Account created.";
+	$feedbackString = "Customer account created.";
+	header("Location: AssetListings.php");
 }
-
 $_SESSION['feedbackString'] = $feedbackString;
-header("Location: CreateAccount.php");
 ?>

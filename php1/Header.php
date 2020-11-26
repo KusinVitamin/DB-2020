@@ -15,7 +15,7 @@ require_once 'db_connection.php';
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/login.php">
+        <a href="/~erisal-8/php1/Login.php">
         <div id="login">
             Log In
         </div>
