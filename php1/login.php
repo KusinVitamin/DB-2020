@@ -42,14 +42,5 @@ $feedbackString = "";
 		</p>
  </form>
 
-<?php
-if($_SESSION['feedbackString']){
-	$feedbackString = $_SESSION['feedbackString'];
-	echo $feedbackString;
-	$_SESSION['feedbackString'] = "";
-}
-?>
-
-
 </body>
 </html>

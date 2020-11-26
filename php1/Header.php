@@ -65,6 +65,18 @@ require_once 'db_connection.php';
     </a>
 </div>
 
+<?php
+if(isset($_SESSION['feedbackString'])){
+    ?>
+    <div id="Notification">
+        <?php
+        echo $_SESSION['feedbackString'];
+        unset($_SESSION['feedbackString']);
+        ?>
+    </div>
+    <?php
+}
+?>
 <style>
 * { 
     margin: 0; 
@@ -77,6 +89,14 @@ a{
     background-color: #131921;
     width: 100%;
     height: 70px;
+}
+#Notification{
+    background-color: #ffff99;
+    width: 100%;
+    color: blue;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 10px 0;
 }
 /*----------------------------------------------*/
 #title{
