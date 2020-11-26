@@ -3,25 +3,54 @@
     <form id="searchForm" action="AssetListings.php"> 
         <input id="searchBox" type="text" name="fname" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
     </form>
-    <a href="/~erisal-8/php1/login.php">
-    <div id="login">
-        Log In
-    </div>
-    </a>
-    <a href="/~erisal-8/php1/CreateAccount.php">
-    <div id="createAccount">
-        Create Account
-    </div>
-    </a>
-    <a href="/~erisal-8/php1/Logout.php">
-    <div id="logout">
-        Log Out
-    </div>
-     <a href="/~erisal-8/php1/ListAsset.php">
-     <div id="logout">
-        List Asset
-     </div>
-    </a>
+    <?php 
+    if(!isset($_SESSION['email'])){
+        ?>
+        <a href="/~erisal-8/php1/login.php">
+        <div id="login">
+            Log In
+        </div>
+        </a>
+    <?php
+    } 
+    if(!isset($_SESSION['email'])){
+        ?>
+        <a href="/~erisal-8/php1/CreateAccount.php">
+        <div id="createAccount">
+            Create Account
+        </div>
+        </a>
+    <?php
+    } 
+    if(isset($_SESSION['email'])){
+        ?>
+        <a href="/~erisal-8/php1/Logout.php">
+        <div id="logout">
+            Log Out
+        </div>
+        </a>
+    <?php
+    }
+    if(isset($_SESSION['email'])){
+        $emailString = "'" . $_SESSION['email'] . "'";
+
+        $queryCheckEmployee = "SELECT Email
+                               FROM Employees
+                               WHERE Email = $emailString";
+
+        $resCheckEmployee = mysqli_query($conn, $queryCheckEmployee);
+
+        if(mysqli_num_rows($resCheckEmployee) === 1){
+            ?>
+            <a href="/~erisal-8/php1/ListAsset.php">
+            <div id="listAsset">
+                List Asset
+            </div>
+            </a>
+        <?php
+        }
+    }
+    ?>
     <a id="cartIcon" href="Shoppingcart.php">
         <img src="cart.png" width="70" height="70">
     </a>
@@ -99,7 +128,7 @@ a{
     -webkit-transition: all 0.2s ease;
 }
 /*----------------------------------------------*/
-#login, #createAccount, #logout{
+#login, #createAccount, #logout, #listAsset{
     display: inline-block;
     width: 70px;
     padding: 2px 0;
@@ -113,16 +142,16 @@ a{
     font-weight: 1000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-#createAccount{
+#createAccount, #listAsset{
     margin: 10px 5px;
 }
-#login p, #createAccount p, #logout p{
+#login p, #createAccount p, #logout p, #listAsset p{
     line-height: 1.5;
     display: inline-block;
     vertical-align: middle;
     
 }
-#login:hover, #createAccount:hover, #logout:hover{
+#login:hover, #createAccount:hover, #logout:hover, #listAsset:hover{
     cursor: pointer; 
     -webkit-filter: brightness(70%);
     -webkit-transition: all 0.2s ease;
