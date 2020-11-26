@@ -65,5 +65,8 @@ if(mysqli_num_rows($resEmailExists) === 1){
     }
 }
 $_SESSION['feedbackString'] = $feedbackString;
-header("Location: CreateAccount.php");
+
+
+header('Location: CreateAccount.php');
+
 ?>

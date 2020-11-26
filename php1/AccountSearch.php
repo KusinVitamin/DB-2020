@@ -49,6 +49,13 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
 }
 
+
 $_SESSION['feedbackString'] = $feedbackString;
 header("Location: AssetListings.php");
+
+
+
+$_SESSION['feedbackString'] = $feedbackString;
+header('Location: CreatAccount');
+
 ?>

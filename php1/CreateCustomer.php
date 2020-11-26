@@ -43,9 +43,14 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
 	mysqli_query($conn, $queryInsertContactInfo);
 
+
     $feedbackString = "Account created.";
     
+
+    $feedbackString = "Account created";
+
 }
+
 $_SESSION['feedbackString'] = $feedbackString;
 header("Location: CreateAccount.php");
 
