@@ -44,12 +44,12 @@ if(isset($_POST['submitButton'])){
     $create_account= $_POST['create_account'];
     if($create_account == "employee"){
     ?>
-    <form class="Credentials" method="POST" action="AccountSearch.php">
+    <form class="Credentials" method="POST" action="CreateEmployee.php">
     <input type = "hidden" name ="account" value="e">
     Company name:      <input type="text" name ="CompanyInput" required> <br>
     Email:	           <input type="text" name ="EmailInput" required> <br>
     Personal password: <input type ="password" name ="P_passwordInput" required> <br>
-    Company password: <input type ="password" name ="p_passwordInput" required> <br>
+    Company password: <input type ="password" name ="C_passwordInput" required> <br>
     First name         <input type="text" name ="Fname" > <br>
     Last name          <input type="text" name ="Lname" > <br>
     <button type ="submit">Create account</button>
@@ -61,7 +61,7 @@ if(isset($_POST['submitButton'])){
 	echo "Du valde att göra en employee.";
 	}else {
 	?>
-    <form class="Credentials" method="POST" action="AccountSearch.php">
+    <form class="Credentials" method="POST" action="CreateCustomer.php">
     <input type = "hidden" name ="account" value="c">
     First name:     <input type="text" name ="Fname" required> <br>
     Last name:	    <input type="text" name ="Lname" required> <br>
@@ -70,7 +70,6 @@ if(isset($_POST['submitButton'])){
     Adress          <input type="text" name ="AdressInput" required> <br>
     Postal code  	<input type="text" name ="PostalCodeInput" > <br>
     Password        <input type="password" name ="Password" required> <br>
-    Email password   <input type="password" name ="emailPasswordInput" required> <br>
     <button type ="submit">Create account</button>
     </form>
 	<?php 
@@ -96,7 +95,7 @@ if(!isset($_POST['submitButton'])){
 <?php 
 }
 
-if($_SESSION['feedbackString']){
+if(isset($_SESSION['feedbackString'])){
 	$feedbackString = $_SESSION['feedbackString'];
 	echo $feedbackString;
 }

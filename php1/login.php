@@ -47,7 +47,7 @@ $feedbackString = "";
  </form>
 
 <?php
-if($_SESSION['feedbackString']){
+if(isset($_SESSION['feedbackString'])){
 	$feedbackString = $_SESSION['feedbackString'];
 	echo $feedbackString;
 }

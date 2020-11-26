@@ -8,17 +8,24 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 session_start();
 $feedbackString = "";
 
+$companyInput =$_POST['CompanyInput'];
+$emailInput =$_POST['EmailInput'];
+$passwordInput =$_POST['P_passwordInput'];
+$companyPasswordInput =$_POST['C_passwordInput'];
+$fnameInput =$_POST['Fname'];
+$lnameInput =$_POST['Lname'];
+
 require_once 'db_connection.php';
 
 $queryEmailExists = "SELECT Con.Email
 FROM ContactInfo AS Con 
 INNER JOIN Customers AS Cus 
 ON Con.CustomerID = Cus.CustomerID
-WHERE Con.Email = $inputEmail
+WHERE Con.Email = $emailInput
 UNION
 SELECT Emp.Email
 FROM Employees AS Emp
-WHERE Emp.Email = $inputEmail";
+WHERE Emp.Email = $emailInput";
 
 $resEmailExists = mysqliquery($conn, $queryEmailExists);
 

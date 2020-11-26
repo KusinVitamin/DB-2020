@@ -45,7 +45,6 @@ if(mysqli_num_rows($resEmailExists) === 1){
     $feedbackString = "Email not registered.";
 
 }
-}
 
 $_SESSION['feedbackString'] = $feedbackString;
 ?>
