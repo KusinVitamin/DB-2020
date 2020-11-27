@@ -1,11 +1,14 @@
 <?php
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if(!isset($_SESSION['shoppingCart'])){
+    $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-$feedbackString = "";
 require_once 'db_connection.php';
+/****************************************************************/
 
 $fnameInput = "'" . $_POST['Fname'] . "'";
 $lnameInput = "'" . $_POST['Lname'] . "'";
@@ -28,7 +31,7 @@ $queryEmailExists = "SELECT Con.Email
 $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
-	$feedbackString = "Email already in use.";
+	$_SESSION['feedbackString'] = "Email already in use.";
 	header("Location: CreateAccount.php");
 } else{
 	$queryInsertCustomer = "INSERT INTO Customers (Password)
@@ -42,9 +45,8 @@ if(mysqli_num_rows($resEmailExists) === 1){
 							   WHERE Password = $passwordInput";
 
 	mysqli_query($conn, $queryInsertContactInfo);
-	$feedbackString = "Customer account created.";
+	$_SESSION['feedbackString'] = "Customer account created.";
 	header("Location: AssetListings.php");
 }
-$_SESSION['feedbackString'] = $feedbackString;
 }
 ?>

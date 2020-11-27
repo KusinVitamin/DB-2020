@@ -1,12 +1,13 @@
 <html>
 <meta charset="UTF-8">
 <head>
+    <link rel="stylesheet" href="ListingStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(function(){
             var includes = $('[data-include]');
             jQuery.each(includes, function(){
-                var file = '/~kemhua-6/php1/' + $(this).data('include') + '.php';
+                var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
                 $(this).load(file);
             });
         });
@@ -15,131 +16,167 @@
 </head>
 <body>
 <div data-include="Header"></div>
+<div class="page">
+    <a class="pagetext">Asset Listings</a>
+</div>
 <?php
 require_once 'db_connection.php';
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if(!isset($_SESSION['shoppingCart'])){
+  $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
-    $_SESSION['LAST_ACTIVITY'] = time();
-    $feedbackString = "";
+$_SESSION['LAST_ACTIVITY'] = time();
+
+/****************************************************************/
+
+function checkStockAddItems($conn, $index, $assetName, $quantity){
+    $queryCheckStock = "SELECT Stock
+                        FROM Assets
+                        WHERE AssetName = $assetName;";
+
+    $resultCheckStock = mysqli_query($conn,$queryCheckStock);
+    $row = mysqli_fetch_array($resultCheckStock);
+    $currentStock = $row['Stock'];
+    
+    if($currentStock >= ($_SESSION['shoppingCart'][$index] + $quantity)){
+
+        $_SESSION['shoppingCart'][$index] += $quantity;
+        if($quantity > 1){
+            $_SESSION['feedbackString'] = "Items added to cart.";
+          } else{
+            $_SESSION['feedbackString'] = "Item added to cart.";
+          }
+    } else{
+        $_SESSION['feedbackString'] = "Asset stock exceeded. Added maximum quantity to cart.";
+        $_SESSION['shoppingCart'][$index] = $currentStock;
+    }
+}
+
+
+// Add items to cart
+if(isset($_POST['Quantity'])){
+    $assetName = "'" . $_POST['AssetName'] . "'";
+    $quantity = $_POST['Quantity'];
+
+    $index = 0;
+    while($index < count($_SESSION['shoppingCart'])){
+      if($_SESSION['shoppingCart'][$index] == $assetName){
+        checkStockAddItems($conn, $index+1, $assetName, $quantity);
+        break;
+      }
+      $index += 2;
+    }
+    
+    if($index == count($_SESSION['shoppingCart'])){
+      array_push($_SESSION['shoppingCart'], $assetName, 0);
+      checkStockAddItems($conn, $index+1, $assetName, $quantity);
+    }
+}
 
 //Assets written out
-
-    $query = ("SELECT * 
-           FROM Assets 
-           ORDER BY AssetName ASC");
-
-
-    $result = mysqli_query($conn,$query);
-
-
-    if(mysqli_num_rows($result)> 0){
-
-        ?>
-            <div class="assetTable">
-            <table id= "Write_Asset">
-    <tr>
-        <th>Product name</th>
-        <th>Seller</th>
-        <th>Stock</th>
-        <th>Price</th>
-        <th>Picture</th>
-        <th>Buy</th>
-        <th>Grading</th>
-    </tr>
-<?php
-    while($row = mysqli_fetch_array($result)){
-        ?>
-        <table id= "Write_Asset">
-
-
-
-        <tr>
-
-
-            <td><?php  echo $row['AssetName'];?></td>
-            <td><?php  echo $row['SupplierName'];?>&nbsp;</td>
-            <td><?php  echo $row['Stock'];?>&nbsp;</td>
-            <td><?php  echo $row['AssetPrice'];?>&nbsp;</td>
-            <td><?php  echo  "<img src='{$row['AssetImage']}'"?> width:100px Height:100px </td>
-
-
-
-
-
-      <!--  Quantity form -->
-        <td>
-        <form method="post" action="Grading.php">
-  		<label for="quantity">Quantity (between 1 and 100):</label>
-  		<input type="number" id="quantity" name="quantity" min="1" max="100">
-  		<input type="submit" name="add_to_cart">
-		</form>
-		</td>
-
-	<!--  Grading form -->
-		<td>
-		<form method="post" action="/action_page.php">
- 		<label for="Grading">Grade product (between 1 and 5):</label>
-  		<input type="range" id="grading" name="grading" min="0" max="5" oninput="this.nextElementSibling.value = this.value">
-		<output>3</output>
-  		<input type="submit">
-		</form>
-		</td>
-
-            </tr>
-
- </table>
- </div>
-           <?php
-
-
-
-
-
-      }
+if(isset($_GET['AssetSearch'])){
+    $Search = $_GET['AssetSearch'];
+} else{
+    $Search = "";
 }
+
+$query ="SELECT * 
+         FROM Assets 
+         WHERE AssetName 
+         LIKE '%$Search%'
+         ORDER BY AssetName ASC;";
+
+$result = mysqli_query($conn,$query);
+
+if(isset($_GET['AssetSearch'])){
+    if(mysqli_num_rows($result) != 1){
+        $_SESSION['feedbackString'] = "Your search generated " . mysqli_num_rows($result) . " results.";
+    } else{
+        $_SESSION['feedbackString'] = "Your search generated 1 result.";
+    }
 }
 ?>
 
-<style>
+<div data-include="Notification"></div>
 
-    #Write_Asset {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        border: #4CAF50;
-        width: 100%;
-        table-layout: fixed;
+<?php
+if(mysqli_num_rows($result)> 0){
+    
+    ?>
+    <table id= "Write_Asset">
+    <tr>
+    <th>Product name</th>
+    <th>Seller</th>
+    <th>Stock</th>
+    <th>Price</th>
+    <th>Image</th>
+    <?php 
+    if(isset($_SESSION['email'])){
+        $emailString = $_SESSION['email'];
+        
+        $queryCheckEmployee = "SELECT Email
+                               FROM Employees
+                               WHERE Email = $emailString";
+
+        $resCheckEmployee = mysqli_query($conn, $queryCheckEmployee);
+
+        if(mysqli_num_rows($resCheckEmployee) === 0){
+            $isCustomer = true;
+            ?>
+            <th>Purchase (Quantity)</th>
+        <?php
+        }
+    } else {
+        ?>
+        <th>Purchase (Quantity)</th>
+    <?php
     }
-
-    img{
-        height: 100px;
-        width: 100px;
-
+    ?>
+    </tr>
+    <?php
+    while($row = mysqli_fetch_array($result)){
+        ?>
+        <table id= "Write_Asset">
+        <tr>
+        <td><?php  echo $row['AssetName'];?></td>
+        <td><?php  echo $row['SupplierName'];?></td>
+        <td><?php  echo $row['Stock'];?></td>
+        <td><?php  echo $row['AssetPrice'];?></td>
+        <td><?php  echo "<img id='assetimg' src='{$row['AssetImage']}'"?> width:100px Height:100px </td>
+        <?php 
+        if(isset($_SESSION['email'])){
+            if(isset($isCustomer)){
+                ?>
+                <td>
+                    <form method="post" action="AssetListings.php">
+                    <input type="number" id="Quantity" name="Quantity" min="1" value="1">
+                    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
+                    <input type="submit" name="add_to_cart" value="Buy">
+                    </form>
+                </td>
+            <?php
+            }
+        } else {
+            ?>
+            <td>
+                <form method="post" action="AssetListings.php">
+                <input type="number" id="Quantity" name="Quantity" min="1" value="1">
+                <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
+                <input type="submit" name="add_to_cart" value="Buy">
+                </form>
+            </td>
+        <?php
+        }
+        ?>
+        </tr>
+        </table>
+        <?php
     }
-
-    #Write_Asset tr:nth-child(even){background-color: #f2f2f2;}
-
-    #Write_Asset tr:hover {background-color: #ddd;}
-
-    #Write_Asset th {
-        text-align: center;
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: center;
-        background-color: #4CAF50;
-        color: white;
-        border: 5px solid black;
-        width: 14%;
-        height: 10%;
-    }
-    #Write_Asset td{
-
-        border: 5px solid black;
-        width: 14%;
-        height: 10%;
-        text-align: center;
-    }
-</style>
+}
+}
+?>
 </body>
 </html>

@@ -1,12 +1,15 @@
 <?php
 session_start();
-$feedbackString = "";
+if(!isset($_SESSION['shoppingCart'])){
+    $_SESSION['shoppingCart'] = array();
+}
 require_once 'db_connection.php';
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
 
+/****************************************************************/
 
 $email = $_SESSION['email'];
 
@@ -28,14 +31,12 @@ if($changeStock && ($_POST['Offset'] != "")){
 
     mysqli_query($conn, $queryChangeStock);
 
-    $feedbackString = "Stock updated.";
-    $_SESSION['feedbackString'] = $feedbackString;
+    $_SESSION['feedbackString'] = "Stock updated.";
 }
 
 if($changeName && ("'" . $_POST['NewName'] . "'" != $assetName)){
     if($_POST['NewName'] == ""){
-        $feedbackString = "Name cannot be empty.";
-        $_SESSION['feedbackString'] = $feedbackString;
+        $_SESSION['feedbackString'] = "Name cannot be empty.";
     } else{
         $newName = "'" . $_POST['NewName'] . "'";
 
@@ -47,8 +48,7 @@ if($changeName && ("'" . $_POST['NewName'] . "'" != $assetName)){
         
 
         if(mysqli_num_rows($resAssetExists) === 1){
-            $feedbackString = "Asset name already taken.";
-            $_SESSION['feedbackString'] = $feedbackString;
+            $_SESSION['feedbackString'] = "Asset name already taken.";
             
         } else{
             $queryChangeName = "UPDATE Assets
@@ -57,8 +57,7 @@ if($changeName && ("'" . $_POST['NewName'] . "'" != $assetName)){
 
             mysqli_query($conn, $queryChangeName);
 
-            $feedbackString = "Name updated.";
-            $_SESSION['feedbackString'] = $feedbackString;
+            $_SESSION['feedbackString'] = "Name updated.";
         }
     }
 }
@@ -72,8 +71,7 @@ if($changePrice){
 
     mysqli_query($conn, $queryChangePrice);
 
-    $feedbackString = "Price updated.";
-    $_SESSION['feedbackString'] = $feedbackString;
+    $_SESSION['feedbackString'] = "Price updated.";
 }
 
 if($changeImage){
@@ -85,8 +83,7 @@ if($changeImage){
 
     mysqli_query($conn, $queryChangeImage);
 
-    $feedbackString = "Image updated.";
-    $_SESSION['feedbackString'] = $feedbackString;
+    $_SESSION['feedbackString'] = "Image updated.";
 }
 
 if($delete){
@@ -95,8 +92,7 @@ if($delete){
 
     $resDeleteAsset = mysqli_query($conn, $queryDeleteAsset);
 
-    $feedbackString = "Asset deleted.";
-    $_SESSION['feedbackString'] = $feedbackString;
+    $_SESSION['feedbackString'] = "Asset deleted.";
 }
 header("Location: ManageAssets.php");
 }
