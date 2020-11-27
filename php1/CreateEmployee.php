@@ -1,11 +1,14 @@
 <?php
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if(!isset($_SESSION['shoppingCart'])){
+    $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-$feedbackString = "";
 require_once 'db_connection.php';
+/****************************************************************/
 
 $companyInput = "'" . $_POST['CompanyInput'] . "'";
 $emailInput = "'" . $_POST['EmailInput'] . "'";
@@ -29,7 +32,7 @@ $queryEmailExists = "SELECT Con.Email
 $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
-    $feedbackString = "Email already in use.";
+    $_SESSION['feedbackString'] = "Email already in use.";
     header("Location: CreateAccount.php");
 } else{
     $querySuppliersExists = "SELECT CompanyPassword
@@ -46,10 +49,10 @@ if(mysqli_num_rows($resEmailExists) === 1){
             $queryInsertEmployee = "INSERT INTO Employees (Email, Company, Fname, Lname, Password)
                                     VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
             mysqli_query($conn, $queryInsertEmployee);
-            $feedbackString = "Employee account created.";
+            $_SESSION['feedbackString'] = "Employee account created.";
             header('Location: AssetListings.php');
         } else{
-            $feedbackString = "Incorrect company password.";
+            $_SESSION['feedbackString'] = "Incorrect company password.";
             header('Location: CreateAccount.php');
         }
     } else{
@@ -64,10 +67,9 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
         mysqli_query($conn, $queryInsertEmployee);
 
-        $feedbackString = "Employee account created. (New supplier)";
+        $_SESSION['feedbackString'] = "Employee account created. (New supplier)";
         header('Location: AssetListings.php');
     }
 }
-$_SESSION['feedbackString'] = $feedbackString;
 }
 ?>

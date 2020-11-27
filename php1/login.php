@@ -14,34 +14,37 @@
 </head>
 
 <body>
+<div data-include="Header"></div>
+<div class="page">
+    <a class="pagetext">Login</a>
+</div>
 <?php 
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 12020)) {
+if(!isset($_SESSION['shoppingCart'])){
+    $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600020)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-$feedbackString = "";
+
 ?>
-
-<div data-include="Header"></div>
-
-
+<div data-include="Notification"></div>
+<?php
+/****************************************************************/
+?>
 <form action ="AccountSearch.php" method="POST">
-		<p>
-		<label>Email: </label>	
-
-		<input type ="text" id="email" name="email" required>		
-
-		</p>
-		
-		<p>
-		<label>Password:</label>
-		<input type="password" id="password" name="password" required>
-		<p>
-		<input type="submit"  id="login"  value="Login">
-		</p>
- </form>
-
+	<p>
+	<label>Email: </label>	
+	<input type ="text" id="email" name="email" required>		
+	</p>
+	<p>
+	<label>Password: </label>
+	<input type="password" id="password" name="password" required>
+	<p>
+	<input type="submit"  id="login"  value="Login">
+	</p>
+</form>
 <?php
 }
 ?>

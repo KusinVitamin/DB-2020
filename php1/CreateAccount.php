@@ -23,19 +23,24 @@ form.Credentials {
 </head>
 
 <body>
+<div data-include="Header"></div>
+<div class="page">
+    <a class="pagetext">Create Account</a>
+</div>
 <?php 
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if(!isset($_SESSION['shoppingCart'])){
+  $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-$feedbackString = "";
+
 ?>
-
-<div data-include="Header"></div>
-
-<?php 
-
+<div data-include="Notification"></div>
+<?php
+/****************************************************************/
 
 if(isset($_POST['submitButton'])){
     

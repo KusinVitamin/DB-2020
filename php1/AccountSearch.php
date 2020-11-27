@@ -1,11 +1,14 @@
 <?php 
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if(!isset($_SESSION['shoppingCart'])){
+    $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-$feedbackString = "";
 require_once 'db_connection.php';
+/****************************************************************/
 
 $inputEmail = "'" . $_POST['email'] . "'";
 $inputPassword = "'" . $_POST['password'] . "'";
@@ -38,17 +41,17 @@ if(mysqli_num_rows($resEmailExists) === 1){
 	$resPasswordCheck = mysqli_query($conn, $queryPasswordCheck);
 
 	if(mysqli_num_rows($resPasswordCheck) === 1){
-		$_SESSION['email'] = $inputEmail;
-        $feedbackString = "Login success!";
+        $_SESSION['email'] = $inputEmail;
+        // Fixa här så att shopping carten laddas från tabellen
+        $_SESSION['feedbackString'] = "Login success!";
         header("Location: AssetListings.php");
 	} else {
-        $feedbackString = "Incorrect password.";
+        $_SESSION['feedbackString'] = "Incorrect password.";
         header('Location: Login.php');
     }	
 } else{
-    $feedbackString = "Email not registered.";
+    $_SESSION['feedbackString'] = "Email not registered.";
     header('Location: Login.php');
 }
-$_SESSION['feedbackString'] = $feedbackString;
 }
 ?>

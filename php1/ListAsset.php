@@ -25,29 +25,33 @@
 </head>
 
 <body>
+<div data-include="Header"></div>
+<div class="page">
+    <a class="pagetext">List Asset</a>
+</div>
 <?php
 session_start();
-if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+if(!isset($_SESSION['shoppingCart'])){
+    $_SESSION['shoppingCart'] = array();
+}
+if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: Logout.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-$feedbackString = "";
 require_once 'db_connection.php';
+
 ?>
-
-<div data-include="Header"></div>
-
-
+<div data-include="Notification"></div>
+<?php
+/****************************************************************/
+?>
     <form class="CredentialsForm" method="POST" action="CreateAsset.php">
-        <input type = "hidden" name ="account" value="e">
         Asset Name:      <input type="text" name ="AssetName" required> <br>
         Stock:	           <input type="text" name ="Stock" required> <br>
         Asset Price: <input type ="text" name ="Price" required> <br>
-        Asset Image         <input type="text" name ="Image" > <br>
-        <button type ="submit">Submit Asset</button>
+        Asset Image:         <input type="text" name ="Image" > <br>
+        <button type ="submit">List Asset</button>
     </form>
-
-
 <?php
 }
 ?>
