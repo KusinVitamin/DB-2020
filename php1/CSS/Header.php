@@ -4,22 +4,22 @@ if(!isset($_SESSION['shoppingCart'])){
     $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 
 $_SESSION['LAST_ACTIVITY'] = time();
-require_once 'db_connection.php';
+require_once '../misc/db_connection.php';
 /****************************************************************/
 ?>
 <div id="header">
-    <a id="title" href="AssetListings.php">Marketplace</a>
-    <form id="searchForm" method="get" action="AssetListings.php"> 
+    <a id="title" href="../Pages/AssetListings.php">Marketplace</a>
+    <form id="searchForm" method="get" action="../Pages/AssetListings.php"> 
         <input id="searchBox" type="text" name="AssetSearch" placeholder="Search for assets..."><input id="searchButton" type="submit" value="Search">
     </form>
     <?php 
     if(!isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/Login.php">
+        <a href="../Pages/Login.php">
         <div id="login">
             Log In
         </div>
@@ -28,7 +28,7 @@ require_once 'db_connection.php';
     } 
     if(!isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/CreateAccount.php">
+        <a href="../Pages/CreateAccount.php">
         <div id="createAccount">
             Create Account
         </div>
@@ -37,7 +37,7 @@ require_once 'db_connection.php';
     } 
     if(isset($_SESSION['email'])){
         ?>
-        <a href="/~erisal-8/php1/Logout.php">
+        <a href="../Exe/LogoutExe.php">
         <div id="logout">
             Log Out
         </div>
@@ -53,12 +53,12 @@ require_once 'db_connection.php';
 
         if(mysqli_num_rows($resCheckEmployee) === 1){
             ?>
-            <a href="/~erisal-8/php1/ListAsset.php">
+            <a href="../Pages/ListAsset.php">
             <div id="listAsset">
                 List Asset
             </div>
             </a>
-            <a href="/~erisal-8/php1/ManageAssets.php">
+            <a href="../Pages/ManageAssets.php">
             <div id="manageAssets">
                 Manage Assets
             </div>
@@ -66,15 +66,15 @@ require_once 'db_connection.php';
         <?php
         } else{
             ?>
-            <a id="cartIcon" href="Shoppingcart.php">
-                <img src="cart.png" width="70" height="70">
+            <a id="cartIcon" href="../Pages/Shoppingcart.php">
+                <img src="../Images/cart.png" width="70" height="70">
             </a>
         <?php
         }
     } else{
         ?>
-        <a id="cartIcon" href="Shoppingcart.php">
-            <img src="cart.png" width="70" height="70">
+        <a id="cartIcon" href="../Pages/Shoppingcart.php">
+            <img src="../Images/cart.png" width="70" height="70">
         </a>
     <?php
     }

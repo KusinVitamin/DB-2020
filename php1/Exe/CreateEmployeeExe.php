@@ -4,10 +4,10 @@ if(!isset($_SESSION['shoppingCart'])){
     $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-require_once 'db_connection.php';
+require_once '../misc/db_connection.php';
 /****************************************************************/
 
 $companyInput = "'" . $_POST['CompanyInput'] . "'";
@@ -33,7 +33,7 @@ $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
     $_SESSION['feedbackString'] = "Email already in use.";
-    header("Location: CreateAccount.php");
+    header("Location: ../Pages/CreateAccount.php");
 } else{
     $querySuppliersExists = "SELECT CompanyPassword
                              FROM Suppliers
@@ -50,10 +50,10 @@ if(mysqli_num_rows($resEmailExists) === 1){
                                     VALUES ($emailInput, $companyInput, $fnameInput, $lnameInput, $passwordInput);";
             mysqli_query($conn, $queryInsertEmployee);
             $_SESSION['feedbackString'] = "Employee account created.";
-            header('Location: AssetListings.php');
+            header('Location: ../Pages/AssetListings.php');
         } else{
             $_SESSION['feedbackString'] = "Incorrect company password.";
-            header('Location: CreateAccount.php');
+            header('Location: ../Pages/CreateAccount.php');
         }
     } else{
         
@@ -68,7 +68,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
         mysqli_query($conn, $queryInsertEmployee);
 
         $_SESSION['feedbackString'] = "Employee account created. (New supplier)";
-        header('Location: AssetListings.php');
+        header('Location: ../Pages/AssetListings.php');
     }
 }
 }

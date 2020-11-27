@@ -6,7 +6,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<div data-include="Header"></div>
+<div data-include="../CSS/Header"></div>
 <div class="page">
     <a class="pagetext">Login</a>
 </div>
@@ -24,16 +24,16 @@ if(!isset($_SESSION['shoppingCart'])){
     $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600020)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
 
 ?>
-<div data-include="Notification"></div>
+<div data-include="../CSS/Notification"></div>
 <?php
 /****************************************************************/
 ?>
-<form action ="AccountSearch.php" method="POST">
+<form action ="../Exe/LoginExe.php" method="POST">
 	<p>
 	<label>Email: </label>	
 	<input type ="text" id="email" name="email" required>		

@@ -1,13 +1,13 @@
 <html>
 <meta charset="UTF-8">
 <head>
-    <link rel="stylesheet" href="ListingStyle.css">
+    <link rel="stylesheet" href="../CSS/ListingStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(function(){
             var includes = $('[data-include]');
             jQuery.each(includes, function(){
-                var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+                var file = $(this).data('include') + '.php';
                 $(this).load(file);
             });
         });
@@ -15,7 +15,7 @@
     </script>
 </head>
 <body>
-<div data-include="Header"></div>
+<div data-include="../CSS/Header"></div>
 <div class="page">
     <a class="pagetext">Shopping Cart</a>
 </div>
@@ -24,9 +24,9 @@ session_start();
 if(!isset($_SESSION['shoppingCart'])){
   $_SESSION['shoppingCart'] = array();
 }
-require_once 'db_connection.php';
+require_once '../misc/db_connection.php';
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
 
@@ -92,7 +92,7 @@ if(isset($_POST['Remove'])){
 }
 
 ?>
-<div data-include="Notification"></div>
+<div data-include="../CSS/Notification"></div>
 
 <table id= "Write_Asset">
 <tr>
@@ -121,18 +121,18 @@ while($index < count($_SESSION['shoppingCart'])){
     <tr>
     <td><?php  echo $row['AssetName'];?></td>
     <td><?php  echo $row['SupplierName'];?></td>
-    <td><?php  echo $row['AssetPrice'];?></td>
+    <td><?php  echo $row['AssetPrice'];?>$</td>
     <td><?php  echo  "<img id='assetimg' src='{$row['AssetImage']}'";?> width:100px Height:100px </td>
     <td>
     <?php echo $_SESSION['shoppingCart'][$index+1];?><br><br>
-    <form method="post" action="Shoppingcart.php">
+    <form method="post" action="../Pages/Shoppingcart.php">
         <input type="number" name="NewQuantity" min="0" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?>"><br><br>
         <input type="submit" name="ChangeQuantity" value="Update">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
     </form>
     </td>
     <td>
-    <form method="post" action="Shoppingcart.php">
+    <form method="post" action="../Pages/Shoppingcart.php">
         <input type="submit" name="Remove" value="Remove">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
     </form>

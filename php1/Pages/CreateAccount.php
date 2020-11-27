@@ -6,7 +6,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -23,7 +23,7 @@ form.Credentials {
 </head>
 
 <body>
-<div data-include="Header"></div>
+<div data-include="../CSS/Header"></div>
 <div class="page">
     <a class="pagetext">Create Account</a>
 </div>
@@ -33,12 +33,12 @@ if(!isset($_SESSION['shoppingCart'])){
   $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
 
 ?>
-<div data-include="Notification"></div>
+<div data-include="../CSS/Notification"></div>
 <?php
 /****************************************************************/
 
@@ -47,7 +47,7 @@ if(isset($_POST['submitButton'])){
     $create_account= $_POST['create_account'];
     if($create_account == "employee"){
     ?>
-    <form class="Credentials" method="POST" action="CreateEmployee.php">
+    <form class="Credentials" method="POST" action="../Exe/CreateEmployeeExe.php">
     <input type = "hidden" name ="account" value="e">
     Company name:      <input type="text" name ="CompanyInput" required> <br>
     Email:	           <input type="text" name ="EmailInput" required> <br>
@@ -63,7 +63,7 @@ if(isset($_POST['submitButton'])){
 
 	}else {
 	?>
-    <form class="Credentials" method="POST" action="CreateCustomer.php">
+    <form class="Credentials" method="POST" action="../Exe/CreateCustomerExe.php">
     <input type = "hidden" name ="account" value="c">
     First name:     <input type="text" name ="Fname" required> <br>
     Last name:	    <input type="text" name ="Lname" required> <br>

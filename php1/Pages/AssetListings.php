@@ -1,13 +1,13 @@
 <html>
 <meta charset="UTF-8">
 <head>
-    <link rel="stylesheet" href="ListingStyle.css">
+    <link rel="stylesheet" href="../CSS/ListingStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(function(){
             var includes = $('[data-include]');
             jQuery.each(includes, function(){
-                var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+                var file = $(this).data('include') + '.php';
                 $(this).load(file);
             });
         });
@@ -15,18 +15,18 @@
     </script>
 </head>
 <body>
-<div data-include="Header"></div>
+<div data-include="../CSS/Header"></div>
 <div class="page">
     <a class="pagetext">Asset Listings</a>
 </div>
 <?php
-require_once 'db_connection.php';
+require_once '../misc/db_connection.php';
 session_start();
 if(!isset($_SESSION['shoppingCart'])){
   $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
 
@@ -100,7 +100,7 @@ if(isset($_GET['AssetSearch'])){
 }
 ?>
 
-<div data-include="Notification"></div>
+<div data-include="../CSS/Notification"></div>
 
 <?php
 if(mysqli_num_rows($result)> 0){
@@ -144,14 +144,14 @@ if(mysqli_num_rows($result)> 0){
         <td><?php  echo $row['AssetName'];?></td>
         <td><?php  echo $row['SupplierName'];?></td>
         <td><?php  echo $row['Stock'];?></td>
-        <td><?php  echo $row['AssetPrice'];?></td>
+        <td><?php  echo $row['AssetPrice'];?>$</td>
         <td><?php  echo "<img id='assetimg' src='{$row['AssetImage']}'"?> width:100px Height:100px </td>
         <?php 
         if(isset($_SESSION['email'])){
             if(isset($isCustomer)){
                 ?>
                 <td>
-                    <form method="post" action="AssetListings.php">
+                    <form method="post" action="../Pages/AssetListings.php">
                     <input type="number" id="Quantity" name="Quantity" min="1" value="1">
                     <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
                     <input type="submit" name="add_to_cart" value="Buy">
@@ -162,7 +162,7 @@ if(mysqli_num_rows($result)> 0){
         } else {
             ?>
             <td>
-                <form method="post" action="AssetListings.php">
+                <form method="post" action="../Pages/AssetListings.php">
                 <input type="number" id="Quantity" name="Quantity" min="1" value="1">
                 <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
                 <input type="submit" name="add_to_cart" value="Buy">

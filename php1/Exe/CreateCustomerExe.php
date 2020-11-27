@@ -4,10 +4,10 @@ if(!isset($_SESSION['shoppingCart'])){
     $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
-    header("Location: Logout.php");
+    header("Location: ../Exe/LogoutExe.php");
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
-require_once 'db_connection.php';
+require_once '../misc/db_connection.php';
 /****************************************************************/
 
 $fnameInput = "'" . $_POST['Fname'] . "'";
@@ -32,7 +32,7 @@ $resEmailExists = mysqli_query($conn, $queryEmailExists);
 
 if(mysqli_num_rows($resEmailExists) === 1){
 	$_SESSION['feedbackString'] = "Email already in use.";
-	header("Location: CreateAccount.php");
+	header("Location: ../Pages/CreateAccount.php");
 } else{
 	$queryInsertCustomer = "INSERT INTO Customers (Password)
         					VALUES ($passwordInput);";
@@ -46,7 +46,7 @@ if(mysqli_num_rows($resEmailExists) === 1){
 
 	mysqli_query($conn, $queryInsertContactInfo);
 	$_SESSION['feedbackString'] = "Customer account created.";
-	header("Location: AssetListings.php");
+	header("Location: ../Pages/AssetListings.php");
 }
 }
 ?>
