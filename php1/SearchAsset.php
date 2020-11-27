@@ -5,7 +5,7 @@
   $(function(){
     var includes = $('[data-include]');
     jQuery.each(includes, function(){
-      var file = '/~erisal-8/php1/' + $(this).data('include') + '.php';
+      var file = '/~ollelv-8/php1/' + $(this).data('include') + '.php';
       $(this).load(file);
     });
   });
@@ -32,9 +32,6 @@ $feedbackString = "";
 require_once 'db_connection.php';
 
 $Search =$_GET['AssetSearch'];
-
-
-
 
 //Assets for requested words written out
 
@@ -89,11 +86,12 @@ if(mysqli_num_rows($result)> 0){
       
         
         
-      
+           header('Location: AssetListings.php');
+           
         
       }
 }   else{
-    echo "Du hittade inget";
+    header('Location: AssetListings.php');
 }
    
 ?>
