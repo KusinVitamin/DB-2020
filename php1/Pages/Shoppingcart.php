@@ -61,25 +61,11 @@ if(isset($_POST['ChangeQuantity'])){
         $newQuantity = $_POST['NewQuantity'];
         $assetName = "'" . $_POST['AssetName'] . "'";
         
-        $queryCheckStock = "SELECT Stock
-                            FROM Assets
-                            WHERE AssetName = $assetName;";
-
-        $resultCheckStock = mysqli_query($conn,$queryCheckStock);
-        $row = mysqli_fetch_array($resultCheckStock);
-        $currentStock = $row['Stock'];
-        
-        
         $index = 0;
         while($index < count($_SESSION['shoppingCart'])){
             if($_SESSION['shoppingCart'][$index] == $assetName){
-                if($currentStock >= $newQuantity){
-                    $_SESSION['shoppingCart'][$index+1] = $newQuantity;
-                    $_SESSION['feedbackString'] = "Quantity updated.";
-                } else{
-                    $_SESSION['feedbackString'] = "Asset stock exceeded. Added maximum quantity to cart.";
-                    $_SESSION['shoppingCart'][$index+1] = $currentStock;
-                }
+                $_SESSION['shoppingCart'][$index+1] = $newQuantity;
+                $_SESSION['feedbackString'] = "Quantity updated.";
                 break;
             }
             $index += 2;
@@ -126,7 +112,7 @@ while($index < count($_SESSION['shoppingCart'])){
     <td>
     <?php echo $_SESSION['shoppingCart'][$index+1];?><br><br>
     <form method="post" action="../Pages/Shoppingcart.php">
-        <input type="number" name="NewQuantity" min="0" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?>"><br><br>
+        <input type="number" name="NewQuantity" min="0" max="<?php echo $row['Stock']; ?>" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?>"><br><br>
         <input type="submit" name="ChangeQuantity" value="Update">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
     </form>

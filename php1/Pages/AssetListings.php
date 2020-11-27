@@ -153,8 +153,8 @@ if(mysqli_num_rows($result)> 0){
                 <td>
                     <form method="post" action="../Pages/AssetListings.php">
                     <input type="number" id="Quantity" name="Quantity" min="1" value="1">
-                    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
-                    <input type="submit" name="add_to_cart" value="Buy">
+                    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                    <input type="submit" name="add_to_cart" value="Add to cart">
                     </form>
                 </td>
             <?php
@@ -164,8 +164,8 @@ if(mysqli_num_rows($result)> 0){
             <td>
                 <form method="post" action="../Pages/AssetListings.php">
                 <input type="number" id="Quantity" name="Quantity" min="1" value="1">
-                <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
-                <input type="submit" name="add_to_cart" value="Buy">
+                <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                <input type="submit" name="add_to_cart" value="Add to cart">
                 </form>
             </td>
         <?php
