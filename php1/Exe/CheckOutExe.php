@@ -1,3 +1,28 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../CSS/ListingStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var includes = $('[data-include]');
+            jQuery.each(includes, function(){
+                var file = $(this).data('include') + '.php';
+                $(this).load(file);
+            });
+        });
+    </script>
+
+
+</head>
+
+<body>
+
+<div data-include="../CSS/Header"></div>
+<div class="page">
+    <a class="pagetext">Check out</a>
+</div>
+
 <?php
 session_start();
 if(!isset($_SESSION['shoppingCart'])){
@@ -28,5 +53,11 @@ while($index < count($_SESSION['shoppingCart'])) {
     $index += 2;
 
  }
+    ?>
+    <h1 id="Receipt">Tack för din investering <?php echo $_POST['FnameInput']?>,  ditt buy gick igenom!! Total price for all your products = <?php echo $_SESSION['price']?> $</h1>
+    <?php
+    $_SESSION['shoppingCart']=array();
+    $_SESSION['price'] =0;
+
 }
 ?>

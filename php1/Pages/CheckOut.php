@@ -20,7 +20,7 @@
 
 <div data-include="../CSS/Header"></div>
 <div class="page">
-<a class="pagetext">Asset Listings</a>
+<a class="pagetext">Check out</a>
 </div>
 
 <?php 
@@ -136,18 +136,9 @@ elseif (isset($_SESSION['email']) and !isset($_POST['buyButton'])){
 
 }
 }else{
-    if(isset($_POST['buyButton'])){
-        ?>
-        <h1 id="showprice">Tack för din investering <?php echo $_POST['FnameInput']?>,  ditt buy gick igenom!! Total price for all your products = <?php echo $_SESSION['price']?> $</h1>
-        <?php
-        echo print_r($_SESSION);
-        $_SESSION['shoppingCart']=array();
-        $_SESSION['price'] =0;
-       
-        
-    }else{
+
         echo "pop";
-    }
+
 }
 
 
