@@ -1,22 +1,7 @@
 <html>
 <meta charset="UTF-8">
 <head>
-<style>
 
-#olle{
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-</style>
 
 
     <link rel="stylesheet" href="../CSS/ListingStyle.css">
@@ -199,7 +184,7 @@ while($index < count($_SESSION['shoppingCart'])){
 
 }
 
-//Behöver hjälp med css HÄÄÄÄÄÄR!
+//Behï¿½ver hjï¿½lp med css Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½R!
 
 ?>
 
@@ -220,7 +205,7 @@ while($index < count($_SESSION['shoppingCart'])){
   margin: 4px 2px;
   cursor: pointer; value="Go to check out" />
 </form>
-        <h1> Total price for all your products = <?php echo $_SESSION['price']?> SEK</h1>
+        <h1> Total price for all your products = <?php echo $_SESSION['price']?> $</h1>
         
 <?php 
 

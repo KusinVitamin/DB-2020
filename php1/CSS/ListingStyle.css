@@ -13,6 +13,40 @@
 
 }
 
+form.Credentials{
+    float: left;
+    background-color:yellow;
+    width:400px;
+    border:2px solid black;
+    margin:10px;
+    padding:10px;
+}
+
+#showprice{
+    position: center;
+    background-color:yellow;
+    width:400px;
+    border:2px solid black;
+    margin:10px;
+    padding:10px;
+    margin-left: -50px; /* margin is -0.5 * dimension */
+    margin-top: -25px;
+
+}
+
+#olle{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 #Write_Asset tr:nth-child(even){background-color: #f2f2f2;}
 
 #Write_Asset tr:hover {background-color: #ddd;}

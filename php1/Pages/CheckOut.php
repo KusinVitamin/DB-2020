@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="../CSS/ListingStyle.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   $(function(){
@@ -12,36 +13,7 @@
   });
 </script>
 
-<style>
-form.Credentials {
-    position: absolute;
-	background-color:yellow;
-	width:400px;
-	border:2px solid black;
-	margin:10px;
-	padding:10px;
-	top: 25%;
-    left: 50%;
-    margin-left: -50px; /* margin is -0.5 * dimension */
-    margin-top: -25px;
-}
 
-#showprice{
-position: absolute;
-	background-color:yellow;
-	width:400px;
-	border:2px solid black;
-	margin:10px;
-	padding:10px;
-	top: 42%;
-    left: 50%;
-    margin-left: -50px; /* margin is -0.5 * dimension */
-    margin-top: -25px;
-
-
-
-}
-</style>
 </head>
 
 <body>
@@ -54,7 +26,7 @@ position: absolute;
 <?php 
 session_start();
 
-require_once 'db_connection.php';
+require_once '../misc/db_connection.php';
 
 
 
@@ -166,7 +138,7 @@ elseif (isset($_SESSION['email']) and !isset($_POST['buyButton'])){
 }else{
     if(isset($_POST['buyButton'])){
         ?>
-        <h1 id="showprice">Tack för din investering <?php echo $_POST['FnameInput']?>,  ditt buy gick igenom!! Total price for all your products = <?php echo $_SESSION['price']?> SEK</h1>
+        <h1 id="showprice">Tack fï¿½r din investering <?php echo $_POST['FnameInput']?>,  ditt buy gick igenom!! Total price for all your products = <?php echo $_SESSION['price']?> $</h1>
         <?php
         $_SESSION['shoppingCart']=array();
         $_SESSION['price'] =0;

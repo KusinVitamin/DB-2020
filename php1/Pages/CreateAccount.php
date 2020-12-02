@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<link rel="stylesheet" href="../CSS/ListingStyle.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   $(function(){
@@ -11,15 +12,7 @@
     });
   });
 </script>
-<style>
-form.Credentials {
-	background-color:yellow;
-	width:400px;
-	border:2px solid black;
-	margin:10px;
-	padding:10px;
-}
-</style>
+
 </head>
 
 <body>
