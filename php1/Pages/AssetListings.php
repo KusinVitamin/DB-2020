@@ -32,6 +32,20 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 /****************************************************************/
 
+
+
+
+function Sum($price,$quant)
+{   
+    $_SESSION['price'] += $_POST['AssetPrice'] * $quant;
+
+    echo "<br>"; 
+    echo  $_SESSION['price'] . "Detta is tot after add";
+    echo "<br>";
+    
+
+}
+
 function checkStockAddItems($conn, $index, $assetName, $quantity){
     $queryCheckStock = "SELECT Stock
                         FROM Assets
@@ -42,16 +56,19 @@ function checkStockAddItems($conn, $index, $assetName, $quantity){
     $currentStock = $row['Stock'];
     
     if($currentStock >= ($_SESSION['shoppingCart'][$index] + $quantity)){
-
+        
         $_SESSION['shoppingCart'][$index] += $quantity;
         if($quantity > 1){
+            Sum($_POST['AssetPrice'], $quantity);
             $_SESSION['feedbackString'] = "Items added to cart.";
           } else{
+            
             $_SESSION['feedbackString'] = "Item added to cart.";
+            Sum($_POST['AssetPrice'], $quantity);
           }
     } else{
-        $_SESSION['feedbackString'] = "Asset stock exceeded. Added maximum quantity to cart.";
-        $_SESSION['shoppingCart'][$index] = $currentStock;
+        $_SESSION['feedbackString'] = "Asset stock exceeded.Chose legit number off assets.";
+       
     }
 }
 
@@ -59,8 +76,11 @@ function checkStockAddItems($conn, $index, $assetName, $quantity){
 // Add items to cart
 if(isset($_POST['Quantity'])){
     $assetName = "'" . $_POST['AssetName'] . "'";
+    $asprice = $_POST['AssetPrice'];
     $quantity = $_POST['Quantity'];
-
+    
+    
+    
     $index = 0;
     while($index < count($_SESSION['shoppingCart'])){
       if($_SESSION['shoppingCart'][$index] == $assetName){
@@ -154,6 +174,7 @@ if(mysqli_num_rows($result)> 0){
                     <form method="post" action="../Pages/AssetListings.php">
                     <input type="number" id="Quantity" name="Quantity" min="1" value="1">
                     <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                     <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>"><br><br>
                     <input type="submit" name="add_to_cart" value="Add to cart">
                     </form>
                 </td>
@@ -165,6 +186,7 @@ if(mysqli_num_rows($result)> 0){
                 <form method="post" action="../Pages/AssetListings.php">
                 <input type="number" id="Quantity" name="Quantity" min="1" value="1">
                 <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                  <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>"><br><br>
                 <input type="submit" name="add_to_cart" value="Add to cart">
                 </form>
             </td>
@@ -176,6 +198,11 @@ if(mysqli_num_rows($result)> 0){
         <?php
     }
 }
+
+
+
+
+
 }
 ?>
 </body>
