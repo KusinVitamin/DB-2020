@@ -1,6 +1,12 @@
 <html>
 <meta charset="UTF-8">
 <head>
+
+<script>
+function myFunction() {
+  alert("Hello! I am an alert box!");
+}
+</script>
     <link rel="stylesheet" href="../CSS/ListingStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
