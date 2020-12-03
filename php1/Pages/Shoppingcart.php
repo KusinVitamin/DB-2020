@@ -162,8 +162,8 @@ while($index < count($_SESSION['shoppingCart'])){
         <input type="number" name="NewQuantity" min="0" max="<?php echo $row['Stock']; ?>" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?>"><br><br>
         <input type="submit" name="ChangeQuantity" value="Update">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
-         <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>">
-           <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">;
+        <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>">
+        <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">;
  
     </form>
     </td>
@@ -171,8 +171,8 @@ while($index < count($_SESSION['shoppingCart'])){
     <form method="post" action="../Pages/Shoppingcart.php">
         <input type="submit" name="Remove" value="Remove">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
-          <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>">
-           <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">;
+        <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>">
+        <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">;
     </form>
     </td>
     </tr>
@@ -184,7 +184,7 @@ while($index < count($_SESSION['shoppingCart'])){
 
 }
 
-//Beh�ver hj�lp med css H������R!
+
 
 ?>
 
@@ -192,19 +192,11 @@ while($index < count($_SESSION['shoppingCart'])){
 <?php if (count($_SESSION['shoppingCart']) ==0){?>
 
         <h1>Your shoppingcart is empty</h1>
-        <?php } else{?>
+        <?php }
+else{?>
         <form action="CheckOut.php">
-    <input type="submit" id="olle" background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer; value="Go to check out" />
-</form>
+        <input type="submit" id="olle"  value="Go to check out" />
+        </form>
         <h1> Total price for all your products = <?php echo $_SESSION['price']?> $</h1>
         
 <?php 

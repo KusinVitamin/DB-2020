@@ -45,11 +45,6 @@ function Sum($price,$quant)
 {   
     $_SESSION['price'] += $_POST['AssetPrice'] * $quant;
 
-    echo "<br>"; 
-    echo  $_SESSION['price'] . "Detta is tot after add";
-    echo "<br>";
-    
-
 }
 
 function checkStockAddItems($conn, $index, $assetName, $quantity){

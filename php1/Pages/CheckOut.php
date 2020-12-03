@@ -20,7 +20,7 @@
 
 <div data-include="../CSS/Header"></div>
 <div class="page">
-<a class="pagetext">Asset Listings</a>
+<a class="pagetext">Check out</a>
 </div>
 
 <?php 
@@ -28,6 +28,28 @@ session_start();
 
 require_once '../misc/db_connection.php';
 
+//Detta är bara ett test för att se output
+$list = $_SESSION['shoppingCart'];
+for($x =0; $x <sizeof($list) ;$x=$x+1){
+    $name = $list[$x];
+    $x=$x+1;
+    $antal =$list[$x];
+    
+
+    
+    
+    //get Suppliername
+    $suppliQuery = "SELECT SupplierName FROM `Assets` WHERE `AssetName`= $name";
+    
+    $supres = mysqli_query($conn,$suppliQuery);
+    
+    $row = mysqli_fetch_row($supres);
+    
+     echo $row[0];
+    
+    $OrderDetQuerry = "INSERT into 'OrderDetails' ('OrderID','AssettName', 'SupplierName', 'Quantity') 
+                                Values ('36','$name', '$row[0]', '$antal')";
+}
 
 
 //Writing out the shopping cart
@@ -135,6 +157,13 @@ elseif (isset($_SESSION['email']) and !isset($_POST['buyButton'])){
         
 
 }
+
+
+}else{
+
+        echo "pop";
+
+
 }
 ?>
 

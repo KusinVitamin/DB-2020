@@ -46,12 +46,7 @@ if(!isset($_SESSION['email']) and (isset($_POST['buyButton']))){
                      WHERE Emp.Email = '$EmailInput'";
     
     $resEmailExists = mysqli_query($conn, $queryEmailExists);
-    if(mysqli_num_rows($resEmailExists) === 1 and mysqli_num_rows($returnExists) >= 1 ){
-        echo "du kom 1";
-        $_SESSION['feedbackString'] = "Du er en tbx-kund.";
-        header('Location: ../Pages/CheckOut.php');
-       
-    }elseif(mysqli_num_rows($resEmailExists) === 1 and mysqli_num_rows($returnExists) ==0){
+  if(mysqli_num_rows($resEmailExists) === 1 ){
         echo "du kom 2";
         $_SESSION['feedbackString'] = "Email finns redan.";
         header('Location: ../Pages/CheckOut.php');
@@ -69,7 +64,9 @@ if(!isset($_SESSION['email']) and (isset($_POST['buyButton']))){
         mysqli_query($conn,$contactQuerry);
 
          //Query to insert Orders
-        $orderQuerry= "INSERT INTO `Orders` (`OrderID`, `ContactInfoID`, `TimePlaced`, `Status`, `TotalPrice`) VALUES (NULL,(SELECT ContactInfoID FROM `ContactInfo` WHERE `Email` LIKE '$EmailInput'), NOW(), 'Pending', '$TotPriceInput')";
+        $orderQuerry=  "INSERT INTO `Orders` (`OrderID`, `ContactInfoID`, `TimePlaced`, `Status`, `TotalPrice`) 
+                        VALUES (NULL,(SELECT ContactInfoID FROM `ContactInfo` 
+                        WHERE `Email` LIKE '$EmailInput'), NOW(), 'Pending', '$TotPriceInput')";
          
          
         if($res_query = mysqli_query($conn,$orderQuerry)){
@@ -82,6 +79,40 @@ if(!isset($_SESSION['email']) and (isset($_POST['buyButton']))){
         
          
          }
+  
+         //Behöver lite hjälp här!
+       /*
+         
+         $list = $_SESSION['shoppingCart'];
+         for($x =0; $x <sizeof($list) ;$x=$x+1){
+             $name = $list[$x];
+             $x=$x+1;
+             $antal =$list[$x];
+             
+          
+             //get Suppliername
+             $suppliQuery = "SELECT SupplierName FROM `Assets` WHERE `AssetName`= '$name'";
+             
+             $supres = mysqli_query($conn,$suppliQuery);
+             
+             $row = mysqli_fetch_row($supres);
+             
+             echo $row[0]. "Suppliername";
+             
+             
+           
+             
+             $OrderDetQuerry = "INSERT into 'OrderDetails' ('OrderID','AssettName', 'SupplierName', 'Quantity') 
+                                Values ('SELECT OrderID FROM `Orders` ORDER BY OrderID DESC LIMIT 1')
+                                ,'$name', '$row[0]', '$antal')";
+             
+         
+         }
+         
+         
+           */
+         
+         
         }
         
   
@@ -94,7 +125,8 @@ if(!isset($_SESSION['email']) and (isset($_POST['buyButton']))){
 //Logged in
 
 else {
-    $orderQuerry= "INSERT INTO `Orders` (`OrderID`, `ContactInfoID`, `TimePlaced`, `Status`, `TotalPrice`) VALUES (NULL,(SELECT ContactInfoID FROM `ContactInfo` WHERE `Email` LIKE '$EmailInput'), NOW(), 'Pending', '$TotPriceInput')";
+    $orderQuerry= "INSERT INTO `Orders` (`OrderID`, `ContactInfoID`, `TimePlaced`, `Status`, `TotalPrice`) 
+                   VALUES (NULL,(SELECT ContactInfoID FROM `ContactInfo` WHERE `Email` LIKE '$EmailInput'), NOW(), 'Pending', '$TotPriceInput')";
     
     
     if($res_query = mysqli_query($conn,$orderQuerry)){
