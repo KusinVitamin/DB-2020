@@ -35,47 +35,6 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 /*************************************************************** */
 
-error_reporting(0);
-//Function for updating shopping cart price when removing asset
-function delete() {
-    echo gettype($_POST['AssetPrice']);
-    echo gettype($_POST['Assetqt']);
-    echo gettype($_SESSION['price']);
-    
-    if(count($_SESSION['shoppingCart'])<2)
-    {
-        $_SESSION['price'] =0;
-    
-    }else{
-    
-        $_SESSION['price'] -= ($_POST['AssetPrice'] * $_POST['Assetqt']) ;
-
-        }
-
-}
-
-//Function for updating shopping cart price when updating
-function updates() {
-    $index = 0;
-    if($_POST['NewQuantity'] == 0){
-        $_SESSION['price'] -= $_SESSION['shoppingCart'][$index+1]* $_POST['NewQuantity'] ;
-    }
-    if($_POST['NewQuantity']> $_POST['Assetqt'] ){
-     
-        $_SESSION['price'] += $_POST['AssetPrice'] * ($_POST['NewQuantity'] - $_POST['Assetqt']);
-    }else{
-      
-        $_SESSION['price'] += $_POST['AssetPrice'] * ($_POST['NewQuantity'] - $_POST['Assetqt']);
-
-    }
-
-}
-    
-    
-    
-
-
-
 // Remove from cart.
 function remove(){
     $assetName = "'" . $_POST['AssetName'] . "'";
@@ -91,7 +50,6 @@ function remove(){
             }
             array_pop($_SESSION['shoppingCart']);
             array_pop($_SESSION['shoppingCart']);
-            delete();
             break;
         }
         $index += 2;
@@ -112,7 +70,6 @@ if(isset($_POST['ChangeQuantity'])){
             if($_SESSION['shoppingCart'][$index] == $assetName){
                 $_SESSION['shoppingCart'][$index+1] = $newQuantity;
                 $_SESSION['feedbackString'] = "Quantity updated.";
-                updates();
                 break;
             }
             $index += 2;
@@ -138,6 +95,7 @@ if(isset($_POST['Remove'])){
 </tr>
 <?php
 
+$totalPrice = 0;
 $index = 0;
 while($index < count($_SESSION['shoppingCart'])){
     $assetName = $_SESSION['shoppingCart'][$index];
@@ -148,7 +106,7 @@ while($index < count($_SESSION['shoppingCart'])){
 
     $result = mysqli_query($conn,$query);
     $row = mysqli_fetch_array($result);
-    
+    $totalPrice += $row['AssetPrice'] * $_SESSION['shoppingCart'][$index+1];
     ?>
     <table id= "Write_Asset">
     <tr>
@@ -182,25 +140,21 @@ while($index < count($_SESSION['shoppingCart'])){
     $index += 2;
 }
 
+if (count($_SESSION['shoppingCart']) == 0){
+        ?>
+        <h1>Your shoppingcart is empty.</h1>
+    <?php 
 }
-
-
-
-?>
-
-
-<?php if (count($_SESSION['shoppingCart']) ==0){?>
-
-        <h1>Your shoppingcart is empty</h1>
-        <?php }
-else{?>
-        <form action="CheckOut.php">
-        <input type="submit" id="olle"  value="Go to check out" />
-        </form>
-        <h1> Total price for all your products = <?php echo $_SESSION['price']?> $</h1>
-        
+else{
+    ?>
+    <form action="../Pages/CheckOut.php">
+    <input type="submit" id="olle"  value="Checkout" />
+    </form>
+    <h1> Total price: $<?php echo $totalPrice?></h1>
 <?php 
 
-}?>
+}
+}
+?>
 </body>
 </html>
