@@ -157,6 +157,7 @@ if(mysqli_num_rows($result)> 0){
         <td><?php  echo $row['Stock'];?></td>
         <td><?php  echo $row['AssetPrice'];?>$</td>
         <td><?php  echo "<img id='assetimg' src='{$row['AssetImage']}'"?> width:100px Height:100px </td>
+
         <?php 
         if(isset($_SESSION['email'])){
             if(isset($isCustomer)){
