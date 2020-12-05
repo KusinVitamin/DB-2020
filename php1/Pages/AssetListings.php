@@ -2,11 +2,7 @@
 <meta charset="UTF-8">
 <head>
 
-<script>
-function myFunction() {
-  alert("Hello! I am an alert box!");
-}
-</script>
+
     <link rel="stylesheet" href="../CSS/ListingStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -33,6 +29,7 @@ if(!isset($_SESSION['shoppingCart'])){
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: ../Exe/LogoutExe.php");
+
 } else{
 $_SESSION['LAST_ACTIVITY'] = time();
 
@@ -41,11 +38,6 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 
 
-function Sum($price,$quant)
-{   
-    $_SESSION['price'] += $_POST['AssetPrice'] * $quant;
-
-}
 
 function checkStockAddItems($conn, $index, $assetName, $quantity){
     $queryCheckStock = "SELECT Stock
@@ -57,15 +49,14 @@ function checkStockAddItems($conn, $index, $assetName, $quantity){
     $currentStock = $row['Stock'];
     
     if($currentStock >= ($_SESSION['shoppingCart'][$index] + $quantity)){
-        
         $_SESSION['shoppingCart'][$index] += $quantity;
         if($quantity > 1){
-            Sum($_POST['AssetPrice'], $quantity);
+           
             $_SESSION['feedbackString'] = "Items added to cart.";
           } else{
             
             $_SESSION['feedbackString'] = "Item added to cart.";
-            Sum($_POST['AssetPrice'], $quantity);
+           
           }
     } else{
         $_SESSION['feedbackString'] = "Asset stock exceeded.Chose legit number off assets.";
