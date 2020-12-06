@@ -34,80 +34,7 @@ if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_S
 $_SESSION['LAST_ACTIVITY'] = time();
 
 /*************************************************************** */
-
-
- 
-
-error_reporting(0);
-
-
-function delete($conn) {
-    $productName = $_POST['AssetName'];
-    $productQuant= $_POST['Quantity'];
-    $email = $_SESSION['email'];
-    
-    if(isset($_SESSION['email'])){
-        
-        //Remove from shoppingcart
-        $RemovecartQuery = "DELETE FROM `ShoppingCartDetails` WHERE AssetName ='Clock'";
-   
-        mysqli_query($conn,$RemovecartQuery);
-        
-        if(count($_SESSION['shoppingCart'])<2)
-        {
-            $_SESSION['price'] =0;
-            
-            
-            
-        }else{
-            
-            $_SESSION['price'] -= ($_POST['AssetPrice'] * $_POST['Assetqt']) ;
-            
-        }
-        
-        
-    }else{
-        if(count($_SESSION['shoppingCart'])<2)
-        {
-            $_SESSION['price'] =0;
-            
-            $resultCheckStock = mysqli_query($conn,$ShoppingcartQuery);
-            
-        }else{
-            
-            $_SESSION['price'] -= ($_POST['AssetPrice'] * $_POST['Assetqt']) ;
-            
-        }
-    }
-    
-    
-    
-    
-}
-
-//Function for updating shopping cart price when updating
-function updates() {
-    $index = 0;
-    if($_POST['NewQuantity'] == 0){
-        $_SESSION['price'] -= $_SESSION['shoppingCart'][$index+1]* $_POST['NewQuantity'] ;
-    }
-    if($_POST['NewQuantity']> $_POST['Assetqt'] ){
-     
-        $_SESSION['price'] += $_POST['AssetPrice'] * ($_POST['NewQuantity'] - $_POST['Assetqt']);
-    }else{
-      
-        $_SESSION['price'] += $_POST['AssetPrice'] * ($_POST['NewQuantity'] - $_POST['Assetqt']);
-
-    }
-
-}
-    
-    
-    
-
-
-
-
+  
 // Remove from cart.
 function remove(){
     $assetName = "'" . $_POST['AssetName'] . "'";
@@ -123,19 +50,6 @@ function remove(){
             }
             array_pop($_SESSION['shoppingCart']);
             array_pop($_SESSION['shoppingCart']);
-
-           
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
             break;
         }
         $index += 2;
@@ -198,7 +112,7 @@ while($index < count($_SESSION['shoppingCart'])){
     <tr>
     <td><?php  echo $row['AssetName'];?></td>
     <td><?php  echo $row['SupplierName'];?></td>
-    <td><?php  echo $row['AssetPrice']* $_SESSION['shoppingCart'][$index+1] . "";?>$</td>
+    <td>$<?php  echo $row['AssetPrice']* $_SESSION['shoppingCart'][$index+1] . "";?></td>
     <td><?php  echo  "<img id='assetimg' src='{$row['AssetImage']}'";?> width:100px Height:100px </td>
     <td>
     <?php echo $_SESSION['shoppingCart'][$index+1];?><br><br>
@@ -207,7 +121,7 @@ while($index < count($_SESSION['shoppingCart'])){
         <input type="submit" name="ChangeQuantity" value="Update">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
         <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>">
-        <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">;
+        <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">
  
     </form>
     </td>
@@ -216,7 +130,7 @@ while($index < count($_SESSION['shoppingCart'])){
         <input type="submit" name="Remove" value="Remove">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
         <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>">
-        <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">;
+        <input type="hidden" name="Assetqt" value="<?php echo $_SESSION['shoppingCart'][$index+1]; ?> ">
     </form>
     </td>
     </tr>

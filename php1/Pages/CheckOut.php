@@ -31,34 +31,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 /*************************************************************** */
 
-//Detta �r bara ett test f�r att se output
-$list = $_SESSION['shoppingCart'];
-for($x =0; $x <sizeof($list) ;$x=$x+1){
-    $name = $list[$x];
-    $x=$x+1;
-    $antal =$list[$x];
-    
-
-    
-    
-    //get Suppliername
-    $suppliQuery = "SELECT SupplierName FROM `Assets` WHERE `AssetName`= $name";
-    
-    $supres = mysqli_query($conn,$suppliQuery);
-    
-    $row = mysqli_fetch_row($supres);
-    
-     echo $row[0];
-    
-    $OrderDetQuerry = "INSERT into 'OrderDetails' ('OrderID','AssettName', 'SupplierName', 'Quantity') 
-                                Values ('36','$name', '$row[0]', '$antal')";
-}
-
-
-//Writing out the shopping cart
 ?>
-
-
 <div data-include="../CSS/Notification"></div>
 
 <table id= "Write_Asset">
@@ -90,7 +63,7 @@ while($index < count($_SESSION['shoppingCart'])){
     <tr>
     <td><?php  echo $row['AssetName'];?></td>
     <td><?php  echo $row['SupplierName'];?></td>
-    <td><?php  echo $row['AssetPrice'];?>$</td>
+    <td>$<?php  echo $row['AssetPrice'];?></td>
     <td><?php  echo  "<img id='assetimg' src='{$row['AssetImage']}'";?> width:100px Height:100px </td>
     <td>
     <?php echo $_SESSION['shoppingCart'][$index+1];?><br><br>

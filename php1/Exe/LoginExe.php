@@ -43,39 +43,27 @@ if(mysqli_num_rows($resEmailExists) === 1){
 	if(mysqli_num_rows($resPasswordCheck) === 1){
         $_SESSION['email'] = $inputEmail;
         
-        $email = $_SESSION['email'];
-            
-        $checkShopping = "SELECT AssetName, Quantity FROM `ShoppingCartDetails`
-                       INNER JOIN ContactInfo ON ContactInfo.CustomerID =ShoppingCartDetails.CustomerID
-                        WHERE ContactInfo.Email=$email ";
-         $shopping = mysqli_query($conn,$checkShopping);
-            
-         //Fill the shoppingarray with the history shoppingcart
-         while ($row = mysqli_fetch_assoc($shopping)) 
-         {
-                
-                
-             array_push($_SESSION['shoppingCart'],"'".$row['AssetName']."'",$row['Quantity']);
-                
-                
-         }
-            
-            
-          
+        $checkShopping = "SELECT AssetName, Quantity 
+                          FROM ShoppingCartDetails AS S
+                          INNER JOIN ContactInfo AS C
+                          ON C.CustomerID = S.CustomerID
+                          WHERE C.Email = $inputEmail;";
+
+        $shopping = mysqli_query($conn,$checkShopping);
+        
+        //Fill the shoppingarray with the history shoppingcart
+        while($row = mysqli_fetch_assoc($shopping)){
+            array_push($_SESSION['shoppingCart'], "'" . $row['AssetName'] . "'", $row['Quantity']);
+        }
+        
         // Delete items from shoppingcartdetails when logging in
-         $deletdetails = "DELETE FROM ShoppingCartDetails
-                          where CustomerID IN (SELECT CustomerID
-                          FROM ContactInfo WHERE Email LIKE $email)";
-         $delete =mysqli_query($conn,$deletdetails);
-         
-        
-        
-        
-        
-        
-        
-        
-        // Fixa här så att shopping carten laddas från tabellen
+        $deletedetails = "DELETE FROM ShoppingCartDetails
+                          WHERE CustomerID IN (SELECT CustomerID
+                                               FROM ContactInfo 
+                                               WHERE Email = $inputEmail);";
+
+        mysqli_query($conn,$deletedetails);
+
         $_SESSION['feedbackString'] = "Login success!";
         header("Location: ../Pages/AssetListings.php");
 	} else {

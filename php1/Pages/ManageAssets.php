@@ -84,7 +84,7 @@ if(mysqli_num_rows($resListAssets)> 0){
       </td>
       <td>
         <form method="post" action="../Exe/ManageAssetsExe.php">
-        <input type="number" name="NewPrice" min="1" max="10000"  value="<?php echo $row['AssetPrice']; ?>"><br><br>
+        $<input type="number" name="NewPrice" min="1" max="10000"  value="<?php echo $row['AssetPrice']; ?>"><br><br>
         <input type="submit" name="ChangePrice" value="Update">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
         </form> 
