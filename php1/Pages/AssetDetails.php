@@ -108,16 +108,25 @@ if(isset($_POST['Grade']) && isset($_POST['Comment'])){
 
         mysqli_query($conn, $queryInsertReview);
 
-        $GradingInt = "SELECT GradingInt FROM Assets WHERE AssetName = $assetName;";
-        $Grading = "SELECT Grading FROM Assets WHERE AssetName = $assetName;";
+        $queryCheckGrade = "SELECT GradingInt, Grading
+                            FROM Assets 
+                            WHERE AssetName = $assetName;";
 
-        $NewGrade = ($GradingInt * $Grading + $GradeInput)/$GradingInt+1;
+        $resultCheckGrade = mysqli_query($conn, $queryCheckGrade);
+        $row = mysqli_fetch_array($resultCheckGrade);
 
-        $queryGradingInt = "UPDATE `Assets` SET `GradingInt` = GradingInt + 1 WHERE AssetName = $assetName;";
-        mysqli_query($conn, $queryGradingInt);
-        $queryInsertGrade = "UPDATE `Assets` SET `Grading` = $NewGrade WHERE AssetName = $assetName;";
+        $NewGrade = ($row['GradingInt'] * $row['Grading'] + $GradeInput) / ($row['GradingInt'] + 1);
+        $NewGradeInt = $row['GradingInt'] + 1;
+
+        $queryUpdateGrade = "UPDATE Assets 
+                             SET GradingInt = $NewGradeInt, Grading = $NewGrade
+                             WHERE AssetName = $assetName;";
+
+        mysqli_query($conn, $queryUpdateGrade);
+
+        $_SESSION['feedbackString'] = "Your review has been posted.";
     } else{
-
+        $_SESSION['feedbackString'] = "You have already posted a review for this item.";
     }
 }
 
@@ -126,7 +135,7 @@ $query = "SELECT *
           WHERE AssetName = $assetName;";
 
 $result = mysqli_query($conn, $query);
-$row = mysqli_fetch_array($result)
+$row = mysqli_fetch_array($result);
 
 ?>
 <div data-include="../CSS/Notification"></div>
@@ -242,7 +251,7 @@ while($row2 = mysqli_fetch_array($result)){
 </table>
 
 <form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
-    <input type="hidden" name="AssetName" value=<?php echo $row['AssetName'];?>>
+    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName'];?>">
     <div class="slidecontainer">
         <p>Grade:</p>
         <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
