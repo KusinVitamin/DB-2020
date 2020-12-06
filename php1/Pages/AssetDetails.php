@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="../CSS/fuckmyass.css">
+    <link rel="stylesheet" href="../CSS/Details.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(function(){
@@ -59,9 +59,15 @@ function checkStockAddItems($conn, $index, $assetName, $quantity){
     }
 }
 
+if(isset($_GET['AssetName'])){
+    $assetName = "'" . $_GET['AssetName'] . "'";
+}
+if(isset($_POST['AssetName'])){
+    $assetName = "'" . $_POST['AssetName'] . "'";
+}
+
 // Add items to cart
 if (isset($_POST['Quantity'])) {
-    $assetName = "'" . $_POST['AssetName'] . "'";
     $asprice = $_POST['AssetPrice'];
     $quantity = $_POST['Quantity'];
 
@@ -81,11 +87,38 @@ if (isset($_POST['Quantity'])) {
     }
 }
 
-if(isset($_GET['AssetName'])){
-    $assetName = "'" . $_GET['AssetName'] . "'";
-}
-if(isset($_POST['AssetName'])){
-    $assetName = "'" . $_POST['AssetName'] . "'";
+if(isset($_POST['Grade']) && isset($_POST['Comment'])){
+    $CommentInput = "'" . $_POST['Comment'] . "'";
+    $GradeInput = $_POST['Grade'];
+    $email = $_SESSION['email'];
+
+    $queryCheckReview = "SELECT * 
+                         FROM Reviews AS R
+                         INNER JOIN ContactInfo AS C
+                         ON R.CustomerID = C.CustomerID
+                         WHERE AssetName = $assetName;";
+
+    $resultCheckReview = mysqli_query($conn, $queryCheckReview);
+
+    if(mysqli_num_rows($resultCheckReview) == 0){
+        $queryInsertReview = "INSERT INTO Reviews (CustomerID, AssetName, CommentBody, Grade)
+                              SELECT CustomerID, $assetName, $CommentInput, $GradeInput
+                              FROM ContactInfo 
+                              WHERE Email = $email;";
+
+        mysqli_query($conn, $queryInsertReview);
+
+        $GradingInt = "SELECT GradingInt FROM Assets WHERE AssetName = $assetName;";
+        $Grading = "SELECT Grading FROM Assets WHERE AssetName = $assetName;";
+
+        $NewGrade = ($GradingInt * $Grading + $GradeInput)/$GradingInt+1;
+
+        $queryGradingInt = "UPDATE `Assets` SET `GradingInt` = GradingInt + 1 WHERE AssetName = $assetName;";
+        mysqli_query($conn, $queryGradingInt);
+        $queryInsertGrade = "UPDATE `Assets` SET `Grading` = $NewGrade WHERE AssetName = $assetName;";
+    } else{
+
+    }
 }
 
 $query = "SELECT * 
@@ -94,10 +127,6 @@ $query = "SELECT *
 
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result)
-
-if(isset($_POST['Grade']) && isset($_POST['Comment'])){
-    
-}
 
 ?>
 <div data-include="../CSS/Notification"></div>
@@ -169,7 +198,7 @@ if(isset($_POST['Grade']) && isset($_POST['Comment'])){
         }
 
         ?>
-        <td><?php  echo $row['Grading'];?></td>
+        <td><?php if(!is_null($row['Grading'])){ echo $row['Grading'];}?></td>
     </tr>
 </table>
 
