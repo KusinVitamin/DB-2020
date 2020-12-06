@@ -33,10 +33,13 @@ require_once '../misc/db_connection.php';
             Create Account
         </div>
         </a>
+    
     <?php
     } 
     if(isset($_SESSION['email'])){
+         echo "Welcome " . $_SESSION['email'];
         ?>
+        
         <a href="../Exe/LogoutExe.php">
         <div id="logout">
             Log Out

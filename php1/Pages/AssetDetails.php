@@ -257,6 +257,7 @@ while($row2 = mysqli_fetch_array($result)){
         <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
         <p>Value: <span id="Value"></span></p>
     </div>
+    
     Comment: <input type="text" name ="Comment" required> <br>
 
     <script>
