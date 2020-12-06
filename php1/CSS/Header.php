@@ -37,7 +37,7 @@ require_once '../misc/db_connection.php';
     <?php
     } 
     if(isset($_SESSION['email'])){
-         echo "Welcome " . $_SESSION['email'];
+         echo $_SESSION['email'];
         ?>
         
         <a href="../Exe/LogoutExe.php">
