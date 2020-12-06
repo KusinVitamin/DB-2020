@@ -96,7 +96,7 @@ if(isset($_POST['Grade']) && isset($_POST['Comment'])){
                          FROM Reviews AS R
                          INNER JOIN ContactInfo AS C
                          ON R.CustomerID = C.CustomerID
-                         WHERE AssetName = $assetName;";
+                         WHERE C.Email = $email;";
 
     $resultCheckReview = mysqli_query($conn, $queryCheckReview);
 
@@ -115,7 +115,12 @@ if(isset($_POST['Grade']) && isset($_POST['Comment'])){
         $resultCheckGrade = mysqli_query($conn, $queryCheckGrade);
         $row = mysqli_fetch_array($resultCheckGrade);
 
-        $NewGrade = ($row['GradingInt'] * $row['Grading'] + $GradeInput) / ($row['GradingInt'] + 1);
+        if(is_null($row['Grading'])){ 
+            $NewGrade = $GradeInput;
+        } else{
+            $NewGrade = ($row['GradingInt'] * $row['Grading'] + $GradeInput) / ($row['GradingInt'] + 1);
+        }
+
         $NewGradeInt = $row['GradingInt'] + 1;
 
         $queryUpdateGrade = "UPDATE Assets 
@@ -250,30 +255,43 @@ while($row2 = mysqli_fetch_array($result)){
 ?>
 </table>
 
-<form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
-    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName'];?>">
-    <div class="slidecontainer">
-        <p>Grade:</p>
-        <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
-        <p>Value: <span id="Value"></span></p>
-    </div>
-    
-    Comment: <input type="text" name ="Comment" required> <br>
 
-    <script>
-        var slider = document.getElementById("Grade");
-        var output = document.getElementById("Value");
-        output.innerHTML = slider.value;
+<?php 
+if(isset($_SESSION['email'])){
+    $emailString = $_SESSION['email'];
+        
+    $queryCheckEmployee = "SELECT Email
+                           FROM Employees
+                           WHERE Email = $emailString";
 
-        slider.oninput = function() {
-            output.innerHTML = this.value;
-        }
-    </script>
+    $resCheckEmployee = mysqli_query($conn, $queryCheckEmployee);
 
-    <button type ="submit">Submit Review</button>
-</form>
+    if(mysqli_num_rows($resCheckEmployee) === 0){
+        ?>
+        <form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
+            <input type="hidden" name="AssetName" value="<?php echo $row['AssetName'];?>">
+            <div class="slidecontainer">
+                <p>Grade:</p>
+                <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
+                <p>Value: <span id="Value"></span></p>
+            </div>
+            Comment: <input type="text" name ="Comment" required> <br>
 
-<?php
+            <script>
+                var slider = document.getElementById("Grade");
+                var output = document.getElementById("Value");
+                output.innerHTML = slider.value;
+
+                slider.oninput = function() {
+                    output.innerHTML = this.value;
+                }
+            </script>
+
+            <button type ="submit">Submit Review</button>
+        </form>
+    <?php
+    }
+}
 }
 ?>
 </body>
