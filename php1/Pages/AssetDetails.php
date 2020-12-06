@@ -26,64 +26,82 @@
 <?php
 require_once '../misc/db_connection.php';
 session_start();
-
 if(!isset($_SESSION['shoppingCart'])){
     $_SESSION['shoppingCart'] = array();
 }
 if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 3600)) {
     header("Location: ../Exe/LogoutExe.php");
 } else {
-    $_SESSION['LAST_ACTIVITY'] = time();
+$_SESSION['LAST_ACTIVITY'] = time();
 
+/****************************************************************/
+
+function checkStockAddItems($conn, $index, $assetName, $quantity){
+    $queryCheckStock = "SELECT Stock
+                        FROM Assets
+                        WHERE AssetName = $assetName;";
+
+    $resultCheckStock = mysqli_query($conn,$queryCheckStock);
+    $row = mysqli_fetch_array($resultCheckStock);
+    $currentStock = $row['Stock'];
+    
+    if($currentStock >= ($_SESSION['shoppingCart'][$index] + $quantity)){
+
+        $_SESSION['shoppingCart'][$index] += $quantity;
+        if($quantity > 1){
+            $_SESSION['feedbackString'] = "Items added to cart.";
+          } else{
+            $_SESSION['feedbackString'] = "Item added to cart.";
+          }
+    } else{
+        $_SESSION['feedbackString'] = "Asset stock exceeded. Added maximum quantity to cart.";
+        $_SESSION['shoppingCart'][$index] = $currentStock;
+    }
+}
 
 // Add items to cart
-    if (isset($_POST['Quantity'])) {
-        $assetName = "'" . $_POST['AssetName'] . "'";
-        $asprice = $_POST['AssetPrice'];
-        $quantity = $_POST['Quantity'];
+if (isset($_POST['Quantity'])) {
+    $assetName = "'" . $_POST['AssetName'] . "'";
+    $asprice = $_POST['AssetPrice'];
+    $quantity = $_POST['Quantity'];
 
 
-        $index = 0;
-        while ($index < count($_SESSION['shoppingCart'])) {
-            if ($_SESSION['shoppingCart'][$index] == $assetName) {
-                checkStockAddItems($conn, $index + 1, $assetName, $quantity);
-                break;
-            }
-            $index += 2;
-        }
-
-        if ($index == count($_SESSION['shoppingCart'])) {
-            array_push($_SESSION['shoppingCart'], $assetName, 0);
+    $index = 0;
+    while ($index < count($_SESSION['shoppingCart'])) {
+        if ($_SESSION['shoppingCart'][$index] == $assetName) {
             checkStockAddItems($conn, $index + 1, $assetName, $quantity);
+            break;
         }
+        $index += 2;
     }
 
-
-//Assets written out
-    if (isset($_GET['AssetSearch'])) {
-        $Search = $_GET['AssetSearch'];
-    } else {
-        $Search = "";
+    if ($index == count($_SESSION['shoppingCart'])) {
+        array_push($_SESSION['shoppingCart'], $assetName, 0);
+        checkStockAddItems($conn, $index + 1, $assetName, $quantity);
     }
-
-    $query = "SELECT * 
-         FROM Assets 
-         WHERE AssetName 
-         LIKE '%Clock%'
-         ORDER BY AssetName ASC;";
-
-    $result = mysqli_query($conn, $query);
 }
-?>
 
+if(isset($_GET['AssetName'])){
+    $assetName = "'" . $_GET['AssetName'] . "'";
+}
+if(isset($_POST['AssetName'])){
+    $assetName = "'" . $_POST['AssetName'] . "'";
+}
+
+$query = "SELECT * 
+          FROM Assets 
+          WHERE AssetName = $assetName;";
+
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_array($result)
+
+if(isset($_POST['Grade']) && isset($_POST['Comment'])){
+    
+}
+
+?>
 <div data-include="../CSS/Notification"></div>
 
-<?php
-
-
-
-
-?>
 <table id= "Write_Asset">
     <tr>
         <th>Product name</th>
@@ -96,8 +114,8 @@ if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_S
             $emailString = $_SESSION['email'];
 
             $queryCheckEmployee = "SELECT Email
-                               FROM Employees
-                               WHERE Email = $emailString";
+                                   FROM Employees
+                                   WHERE Email = $emailString";
 
             $resCheckEmployee = mysqli_query($conn, $queryCheckEmployee);
 
@@ -113,115 +131,111 @@ if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_S
             <?php
         }
         ?>
-        <th>Grading</th>
+        <th>Grade (1-5)</th>
     </tr>
-    <?php
-    while($row = mysqli_fetch_array($result)){
-    ?>
-    <table id= "Write_Asset">
-        <tr>
-            <td><?php  echo $row['AssetName'];?></td>
-            <td><?php  echo $row['SupplierName'];?></td>
-            <td><?php  echo $row['Stock'];?></td>
-            <td><?php  echo $row['AssetPrice'];?>$</td>
-            <td><?php  echo "<img id='assetimg' src='{$row['AssetImage']}'"?> width:100px Height:100px </td>
-
-            <?php
-            if(isset($_SESSION['email'])){
-                if(isset($isCustomer)){
-                    ?>
-                    <td>
-                        <form method="post" action="../Pages/AssetListings.php">
-                            <input type="number" id="Quantity" name="Quantity" min="1" value="1">
-                            <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
-                            <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>"><br><br>
-                            <input type="submit" name="add_to_cart" value="Add to cart">
-                        </form>
-                    </td>
-                    <?php
-                }
-            } else {
+</table>
+<table id= "Write_Asset">
+    <tr>
+        <td><?php  echo $row['AssetName'];?></td>
+        <td><?php  echo $row['SupplierName'];?></td>
+        <td><?php  echo $row['Stock'];?></td>
+        <td>$<?php  echo $row['AssetPrice'];?></td>
+        <td><?php  echo "<img id='assetimg' src='{$row['AssetImage']}'"?> width:100px Height:100px </td>
+        <?php
+        if(isset($_SESSION['email'])){
+            if(isset($isCustomer)){
                 ?>
                 <td>
-                    <form method="post" action="../Pages/AssetListings.php">
-                        <input type="number" id="Quantity" name="Quantity" min="1" value="1">
-                        <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
-                        <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>"><br><br>
-                        <input type="submit" name="add_to_cart" value="Add to cart">
-                    </form>
+                <form method="post" action="../Pages/AssetDetails.php">
+                    <input type="number" id="Quantity" name="Quantity" min="1" value="1">
+                    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                    <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>"><br><br>
+                    <input type="submit" name="add_to_cart" value="Add to cart">
+                </form>
                 </td>
                 <?php
             }
-
+        } else {
             ?>
-            <td><?php  echo $row['Grading'];?></td>
-        </tr>
-    </table>
-    <?php
-    }
+            <td>
+            <form method="post" action="../Pages/AssetDetails.php">
+                    <input type="number" id="Quantity" name="Quantity" min="1" value="1">
+                    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                    <input type="hidden" name="AssetPrice" value="<?php echo $row['AssetPrice']; ?>"><br><br>
+                    <input type="submit" name="add_to_cart" value="Add to cart">
+            </form>
+            </td>
+            <?php
+        }
 
+        ?>
+        <td><?php  echo $row['Grading'];?></td>
+    </tr>
+</table>
 
-    $comments = "SELECT *
-    FROM Comments
-    WHERE AssetName
-    LIKE '%$Search%'
-    ORDER BY AssetName ASC;";
-
-    $result = mysqli_query($conn, $comments);
-
-
-
-
-?>
-
-    <table id= "Comments">
-        <tr>
-            <th>Buyer</th>
-            <th>Review</th>
-
-        </tr>
-        <?php
-        while($row = mysqli_fetch_array($result)){
-            $id = $row['CustomerID'];
-            $Email = "SELECT Email
-             FROM ContactInfo 
-             WHERE CustomerID = $id";
-
-            $result2 = mysqli_query($conn, $Email);
-            $mail = mysqli_fetch_array($result2)
-            ?>
-            <table id= "Comments">
-                <tr>
-                    <td><?php  echo $mail['Email'];?></td>
-                    <td><?php  echo $row['CommentBody'];?></td>
-
-                </tr>
-            </table>
 <?php
-    }
+
+$queryGetReviews = "SELECT *
+                    FROM Reviews
+                    WHERE AssetName = $assetName;";
+
+$result = mysqli_query($conn, $queryGetReviews);
 
 ?>
 
-        <form class="Credentials" method="POST" action="">
-            <input type = "hidden" name ="account" value="e">
-            <div class="slidecontainer">
-                <p>Grade:</p>
-                <input type="range" min="1" max="5" value="3"class="slider" id="Grade"><br>
-                <p>Value: <span id="Value"></span></p>
-            </div>
-                Comment: <input type="text" name ="EmailInput" required> <br>
+<table id= "Reviews">
+    <tr>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Grade (1-5)</th>
+    </tr>
+</table>
 
-                <script>
-                    var slider = document.getElementById("Grade");
-                    var output = document.getElementById("Value");
-                    output.innerHTML = slider.value;
+<table id= "Reviews">
+<?php
+while($row2 = mysqli_fetch_array($result)){
+    $id = $row2['CustomerID'];
+    $Fname = "SELECT Fname
+              FROM ContactInfo 
+              WHERE CustomerID = $id;";
 
-                    slider.oninput = function() {
-                        output.innerHTML = this.value;
-                    }
-                </script>
+    $result2 = mysqli_query($conn, $Fname);
+    $Fname = mysqli_fetch_array($result2)
+    ?>
+    <tr>
+        <td><?php  echo $Fname['Fname'];?></td>
+        <td><?php  echo $row2['CommentBody'];?></td>
+        <td><?php  echo $row2['Grade'];?></td>
+    </tr>
+<?php
+}
+?>
+</table>
 
-            <button type ="submit">Submit Review</button>
-        </form>
+<form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
+    <input type="hidden" name="AssetName" value=<?php echo $row['AssetName'];?>>
+    <div class="slidecontainer">
+        <p>Grade:</p>
+        <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
+        <p>Value: <span id="Value"></span></p>
+    </div>
+    Comment: <input type="text" name ="Comment" required> <br>
+
+    <script>
+        var slider = document.getElementById("Grade");
+        var output = document.getElementById("Value");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+    </script>
+
+    <button type ="submit">Submit Review</button>
+</form>
+
+<?php
+}
+?>
 </body>
 </html>

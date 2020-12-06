@@ -85,7 +85,7 @@ form.Review{
 }
 
 
-#Comments {
+#Reviews {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     border: #4CAF50;
@@ -94,32 +94,32 @@ form.Review{
     line-height: 0.5;
 }
 
-#Comments th:nth-child(1){
+#Reviews th:nth-child(1){
     background-color: #4CAF50;
     width: 14.3%;
     height: 100px;
 }
-#Comments th:nth-child(2){
+#Reviews th:nth-child(2){
     background-color: #4CAF50;
 
     height: 100px;
 }
 
-#Comments td:nth-child(1){
+#Reviews td:nth-child(1){
     background-color: #f2f2f2;
     width: 14.3%;
     height: 100px;
 }
 
-#Comments td:nth-child(2){
+#Reviews td:nth-child(2){
     background-color: #f2f2f2;
 
     height: 100px;
 }
 
-#Comments tr:hover {background-color: #ddd;}
+#Reviews tr:hover {background-color: #ddd;}
 
-#Comments th {
+#Reviews th {
     text-align: center;
     padding-top: 12px;
     padding-bottom: 12px;
@@ -129,7 +129,7 @@ form.Review{
     border: 5px solid black;
 
 }
-#Comments td{
+#Reviews td{
 
     border: 5px solid black;
     text-align: center;

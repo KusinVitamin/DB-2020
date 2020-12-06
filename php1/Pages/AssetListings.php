@@ -147,7 +147,12 @@ if(mysqli_num_rows($result)> 0){
         ?>
         <table id= "Write_Asset">
         <tr>
-        <td><?php  echo $row['AssetName'];?></td>
+        <td><?php  echo $row['AssetName'];?><br><br>
+        <form method="GET" action="../Pages/AssetDetails.php">
+                    <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>"><br><br>
+                    <input type="submit" value="View details">
+        </form>
+        </td>
         <td><?php  echo $row['SupplierName'];?></td>
         <td><?php  echo $row['Stock'];?></td>
         <td>$<?php  echo $row['AssetPrice'];?></td>
