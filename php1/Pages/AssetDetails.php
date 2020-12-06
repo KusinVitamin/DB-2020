@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="../CSS/fuckmyass.css">
+    <link rel="stylesheet" href="../CSS/Details.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(function(){
@@ -206,10 +206,10 @@ if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_S
             <input type = "hidden" name ="account" value="e">
             <div class="slidecontainer">
                 <p>Grade:</p>
-                <input type="range" min="1" max="5" value="3"class="slider" id="Grade"><br>
+                <input type="range" name = "Grade" min="1" max="5" value="3"class="slider" id="Grade"required><br>
                 <p>Value: <span id="Value"></span></p>
             </div>
-                Comment: <input type="text" name ="EmailInput" required> <br>
+                Comment: <input type="text" name ="Comment" required> <br>
 
                 <script>
                     var slider = document.getElementById("Grade");
@@ -223,5 +223,30 @@ if ((isset($_SESSION['email'])) && ($_SESSION['LAST_ACTIVITY']) && (time() - $_S
 
             <button type ="submit">Submit Review</button>
         </form>
+<?php
+
+
+        $CommentInput = "'" . $_POST['Comment'] . "'";
+        $GradeInput = "'" . $_POST['Grade'] . "'";
+        $email = $_SESSION['email'];
+        $CustomerID = "SELECT CustomerID FROM ContactInfo WHERE Email = $email;";
+
+        $queryInsertComment = "INSERT INTO Reviews (CustomerID, AssetName, CommentBody, Grade)
+        VALUES ($CustomerID, $assetName, $CommentInput, $GradeInput);";
+
+        mysqli_query($conn, $queryInsertComment);
+
+
+        $GradingInt = "SELECT GradingInt FROM Assets WHERE AssetName = $assetName;";
+        $Grading = "SELECT Grading FROM Assets WHERE AssetName = $assetName;";
+
+        $NewGrade = ($GradingInt * $Grading + $GradeInput)/$GradingInt+1;
+
+        $queryGradingInt = "UPDATE `Assets` SET `GradingInt` = GradingInt + 1 WHERE AssetName = $assetName;";
+        mysqli_query($conn, $queryGradingInt);
+        $queryInsertGrade = "UPDATE `Assets` SET `Grading` = $NewGrade WHERE AssetName = $assetName;";
+
+
+?>
 </body>
 </html>
