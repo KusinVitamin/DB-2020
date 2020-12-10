@@ -229,8 +229,9 @@ $result = mysqli_query($conn, $queryGetReviews);
 <table id= "Reviews">
     <tr>
         <th>Name</th>
-        <th>Comment</th>
         <th>Grade (1-5)</th>
+        <th>Comment</th>
+
     </tr>
 </table>
 
@@ -247,8 +248,9 @@ while($row2 = mysqli_fetch_array($result)){
     ?>
     <tr>
         <td><?php  echo $Fname['Fname'];?></td>
-        <td><?php  echo $row2['CommentBody'];?></td>
         <td><?php  echo $row2['Grade'];?></td>
+        <td><?php  echo $row2['CommentBody'];?></td>
+
     </tr>
 <?php
 }
