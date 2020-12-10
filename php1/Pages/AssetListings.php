@@ -53,8 +53,21 @@ function checkStockAddItems($conn, $index, $assetName, $quantity){
             $_SESSION['feedbackString'] = "Item added to cart.";
           }
     } else{
-        $_SESSION['feedbackString'] = "Asset stock exceeded. Added maximum quantity to cart.";
-        $_SESSION['shoppingCart'][$index] = $currentStock;
+        if($currentStock == 0){
+            while($index < (count($_SESSION['shoppingCart']) - 2)){
+                $_SESSION['shoppingCart'][$index] = $_SESSION['shoppingCart'][$index+2];
+                $_SESSION['shoppingCart'][$index+1] = $_SESSION['shoppingCart'][$index+3];
+                $index += 2;
+            }
+            array_pop($_SESSION['shoppingCart']);
+            array_pop($_SESSION['shoppingCart']);
+
+            $_SESSION['feedbackString'] = "The asset is currently out of stock.";
+        }
+        else{
+            $_SESSION['feedbackString'] = "Asset stock exceeded. Added maximum quantity to cart.";
+            $_SESSION['shoppingCart'][$index] = $currentStock;
+        }
     }
 }
 
@@ -64,8 +77,6 @@ if(isset($_POST['Quantity'])){
     $assetName = "'" . $_POST['AssetName'] . "'";
     $asprice = $_POST['AssetPrice'];
     $quantity = $_POST['Quantity'];
-    
-    
     
     $index = 0;
     while($index < count($_SESSION['shoppingCart'])){

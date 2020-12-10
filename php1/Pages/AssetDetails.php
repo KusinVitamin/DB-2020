@@ -96,7 +96,7 @@ if(isset($_POST['Grade']) && isset($_POST['Comment'])){
                          FROM Reviews AS R
                          INNER JOIN ContactInfo AS C
                          ON R.CustomerID = C.CustomerID
-                         WHERE C.Email = $email;";
+                         WHERE R.AssetName = $assetName AND C.Email = $email;";
 
     $resultCheckReview = mysqli_query($conn, $queryCheckReview);
 
@@ -274,7 +274,7 @@ if(isset($_SESSION['email'])){
                 <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
                 <p>Value: <span id="Value"></span></p>
             </div>
-            Comment: <input type="text" name ="Comment" required> <br>
+            Comment: <input type="text" name ="Comment" maxlength="75" required> <br>
 
             <script>
                 var slider = document.getElementById("Grade");
