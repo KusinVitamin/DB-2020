@@ -255,6 +255,7 @@ while($row2 = mysqli_fetch_array($result)){
 ?>
 </table>
 
+
 <?php 
 if(isset($_SESSION['email'])){
     $emailString = $_SESSION['email'];
