@@ -259,7 +259,7 @@ while($row2 = mysqli_fetch_array($result)){
 
 
 <?php 
-if(isset($isCustomer){
+if(isset($isCustomer)){
     ?>
     <form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
         <input type="hidden" name="AssetName" value="<?php echo $row['AssetName'];?>">
