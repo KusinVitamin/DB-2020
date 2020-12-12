@@ -295,23 +295,24 @@ while($row2 = mysqli_fetch_array($result)){
         <td>
         <?php  
         echo $row2['CommentBody'] . "<br><br>";
+        if(isset($_SESSION['email'])){
+            $queryYourReview = "SELECT *
+                                FROM ContactInfo AS C 
+                                INNER JOIN Reviews AS R
+                                ON C.CustomerID = R.CustomerID
+                                WHERE C.Email = $emailString AND R.CustomerID = $id AND R.AssetName = $assetName;";
 
-        $queryYourReview = "SELECT *
-                            FROM ContactInfo AS C 
-                            INNER JOIN Reviews AS R
-                            ON C.CustomerID = R.CustomerID
-                            WHERE C.Email = $emailString AND R.AssetName = $assetName;";
+            $resultYourReview = mysqli_query($conn, $queryYourReview);
 
-        $resultYourReview = mysqli_query($conn, $queryYourReview);
-
-        if(mysqli_num_rows($resultYourReview) == 1 || $emailString == "'admin'"){
-            ?>
-            <form method="post" action="../Pages/AssetDetails.php">
-            <input type="submit" name="Delete" value="Delete">
-            <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
-            <input type="hidden" name="id" value="<?php echo $row2['CustomerID']; ?>">
-            </form> 
-            <?php
+            if(mysqli_num_rows($resultYourReview) == 1 || $emailString == "'admin'"){
+                ?>
+                <form method="post" action="../Pages/AssetDetails.php">
+                <input type="submit" name="Delete" value="Delete">
+                <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
+                <input type="hidden" name="id" value="<?php echo $row2['CustomerID']; ?>">
+                </form> 
+                <?php
+            }
         }
         ?>
         </td>
