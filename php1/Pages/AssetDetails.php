@@ -135,6 +135,49 @@ if(isset($_POST['Grade']) && isset($_POST['Comment'])){
     }
 }
 
+if(isset($_POST['Delete'])){
+    $id = $_POST['id'];
+
+    $queryGetGrade = "SELECT Grade
+                      FROM Reviews
+                      WHERE AssetName = $assetName AND CustomerID = $id;";
+
+    $resultGetGrade = mysqli_query($conn, $queryGetGrade);
+    $row = mysqli_fetch_array($resultGetGrade);
+
+    $Grade = $row['Grade'];
+
+    $query = "DELETE FROM Reviews
+              WHERE AssetName = $assetName AND CustomerID = $id;";
+
+    mysqli_query($conn, $query);
+
+    $queryCheckGrade = "SELECT GradingInt, Grading
+                        FROM Assets 
+                        WHERE AssetName = $assetName;";
+
+    $resultCheckGrade = mysqli_query($conn, $queryCheckGrade);
+    $row = mysqli_fetch_array($resultCheckGrade);
+
+    $NewGradeInt = $row['GradingInt'] - 1;
+
+    if($NewGradeInt == 0){
+        $queryUpdateGrade = "UPDATE Assets 
+                             SET GradingInt = $NewGradeInt, Grading = NULL
+                             WHERE AssetName = $assetName;";
+    } else{
+        $NewGrade = ($row['GradingInt'] * $row['Grading'] - $Grade) / ($row['GradingInt'] - 1);
+
+        $queryUpdateGrade = "UPDATE Assets 
+                             SET GradingInt = $NewGradeInt, Grading = $NewGrade
+                             WHERE AssetName = $assetName;";
+    }
+
+    mysqli_query($conn, $queryUpdateGrade);
+
+    $_SESSION['feedbackString'] = "Your review has been deleted.";
+}
+
 $query = "SELECT * 
           FROM Assets 
           WHERE AssetName = $assetName;";
@@ -249,8 +292,29 @@ while($row2 = mysqli_fetch_array($result)){
     <tr>
         <td><?php  echo $Fname['Fname'];?></td>
         <td><?php  echo $row2['Grade'];?></td>
-        <td><?php  echo $row2['CommentBody'];?></td>
+        <td>
+        <?php  
+        echo $row2['CommentBody'] . "<br><br>";
 
+        $queryYourReview = "SELECT *
+                            FROM ContactInfo AS C 
+                            INNER JOIN Reviews AS R
+                            ON C.CustomerID = R.CustomerID
+                            WHERE C.Email = $emailString AND R.AssetName = $assetName;";
+
+        $resultYourReview = mysqli_query($conn, $queryYourReview);
+
+        if(mysqli_num_rows($resultYourReview) == 1 || $emailString == "'admin'"){
+            ?>
+            <form method="post" action="../Pages/AssetDetails.php">
+            <input type="submit" name="Delete" value="Delete">
+            <input type="hidden" name="AssetName" value="<?php echo $row['AssetName']; ?>">
+            <input type="hidden" name="id" value="<?php echo $row2['CustomerID']; ?>">
+            </form> 
+            <?php
+        }
+        ?>
+        </td>
     </tr>
 <?php
 }
