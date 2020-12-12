@@ -37,12 +37,16 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 $email = $_SESSION['email'];
 
-$queryListAssets = "SELECT *
-                    FROM Employees AS E 
-                    INNER JOIN Assets AS A 
-                    ON E.Company = A.SupplierName
-                    WHERE E.Email = $email;";
-
+if($email == "'admin'"){
+  $queryListAssets = "SELECT *
+                      FROM Assets;";
+} else{
+  $queryListAssets = "SELECT *
+                      FROM Employees AS E 
+                      INNER JOIN Assets AS A 
+                      ON E.Company = A.SupplierName
+                      WHERE E.Email = $email;";
+}
 
 $resListAssets = mysqli_query($conn,$queryListAssets);
 

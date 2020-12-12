@@ -259,40 +259,30 @@ while($row2 = mysqli_fetch_array($result)){
 
 
 <?php 
-if(isset($_SESSION['email'])){
-    $emailString = $_SESSION['email'];
-        
-    $queryCheckEmployee = "SELECT Email
-                           FROM Employees
-                           WHERE Email = $emailString";
+if(isset($isCustomer){
+    ?>
+    <form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
+        <input type="hidden" name="AssetName" value="<?php echo $row['AssetName'];?>">
+        <div class="slidecontainer">
+            <p>Grade:</p>
+            <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
+            <p>Value: <span id="Value"></span></p>
+        </div>
+        Comment: <input type="text" name ="Comment" maxlength="75" required> <br>
 
-    $resCheckEmployee = mysqli_query($conn, $queryCheckEmployee);
+        <script>
+            var slider = document.getElementById("Grade");
+            var output = document.getElementById("Value");
+            output.innerHTML = slider.value;
 
-    if(mysqli_num_rows($resCheckEmployee) === 0){
-        ?>
-        <form class="Credentials" method="POST" action="../Pages/AssetDetails.php">
-            <input type="hidden" name="AssetName" value="<?php echo $row['AssetName'];?>">
-            <div class="slidecontainer">
-                <p>Grade:</p>
-                <input type="range" min="1" max="5" value="3" class="slider" id="Grade" name="Grade"><br>
-                <p>Value: <span id="Value"></span></p>
-            </div>
-            Comment: <input type="text" name ="Comment" maxlength="75" required> <br>
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+        </script>
 
-            <script>
-                var slider = document.getElementById("Grade");
-                var output = document.getElementById("Value");
-                output.innerHTML = slider.value;
-
-                slider.oninput = function() {
-                    output.innerHTML = this.value;
-                }
-            </script>
-
-            <button type ="submit">Submit Review</button>
-        </form>
-    <?php
-    }
+        <button type ="submit">Submit Review</button>
+    </form>
+<?php
 }
 }
 ?>

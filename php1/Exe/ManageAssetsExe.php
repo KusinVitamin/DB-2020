@@ -11,8 +11,6 @@ $_SESSION['LAST_ACTIVITY'] = time();
 
 /****************************************************************/
 
-$email = $_SESSION['email'];
-
 $changeStock = $_POST['ChangeStock'];
 $changeName = $_POST['ChangeName'];
 $changePrice = $_POST['ChangePrice'];
