@@ -36,6 +36,8 @@ $_SESSION['LAST_ACTIVITY'] = time();
 /****************************************************************/
 
 $email = $_SESSION['email'];
+$OrderID = $_GET['OrderID'];
+
 
 $queryListOrderDetails = "SELECT *
                           FROM OrderDetails
