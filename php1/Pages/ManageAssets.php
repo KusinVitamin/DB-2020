@@ -70,7 +70,7 @@ if(mysqli_num_rows($resListAssets)> 0){
       <tr>
       <td><?php  echo $row['AssetName'];?></td>
       <td><?php  echo $row['Stock'];?></td>
-      <td><?php  echo $row['AssetPrice'];?>$</td>
+      <td>$<?php  echo $row['AssetPrice'];?></td>
       <td><?php  echo "<img id='assetimg' src='{$row['AssetImage']}'"?></td>
       <td>
         <form method="post" action="../Exe/ManageAssetsExe.php">

@@ -66,9 +66,23 @@ require_once '../misc/db_connection.php';
                 Manage Assets
             </div>
             </a>
-        <?php
+            <?php
+            if($emailString == "'admin'"){
+                ?>
+                <a href="../Pages/Orders.php">
+                <div id="orders">
+                    Orders
+                </div>
+                </a>
+                <?php
+            }
         } else{
             ?>
+            <a href="../Pages/Orders.php">
+            <div id="orders">
+                Orders
+            </div>
+            </a>
             <a id="cartIcon" href="../Pages/Shoppingcart.php">
                 <img src="../Images/cart.png" width="70" height="70">
             </a>
@@ -128,7 +142,7 @@ require_once '../misc/db_connection.php';
     margin-right: 1%;
     margin-top: 20px;
     display: inline-block;
-    width: 65%;
+    width: 55%;
     border: none;
     border-radius: 5px;
     vertical-align: top;
@@ -164,7 +178,7 @@ require_once '../misc/db_connection.php';
     -webkit-transition: all 0.2s ease;
 }
 /*----------------------------------------------*/
-#login, #createAccount, #logout, #listAsset, #manageAssets{
+#login, #createAccount, #logout, #listAsset, #manageAssets, #orders{
     display: inline-block;
     width: 75px;
     padding: 2px 0;
@@ -181,13 +195,13 @@ require_once '../misc/db_connection.php';
 #createAccount, #manageAssets{
     margin: 20px 5px;
 }
-#login p, #createAccount p, #logout p, #listAsset p, #manageAssets p{
+#login p, #createAccount p, #logout p, #listAsset p, #manageAssets p, #orders p{
     line-height: 1.5;
     display: inline-block;
     vertical-align: middle;
     
 }
-#login:hover, #createAccount:hover, #logout:hover, #listAsset:hover, #manageAssets:hover{
+#login:hover, #createAccount:hover, #logout:hover, #listAsset:hover, #manageAssets:hover, #orders:hover{
     cursor: pointer; 
     -webkit-filter: brightness(70%);
     -webkit-transition: all 0.2s ease;
