@@ -178,7 +178,7 @@ require_once '../misc/db_connection.php';
     -webkit-transition: all 0.2s ease;
 }
 /*----------------------------------------------*/
-#login, #createAccount, #logout, #listAsset, #manageAssets, #orders{
+#login, #createAccount, #logout, #listAsset, #manageAssets{
     display: inline-block;
     width: 75px;
     padding: 2px 0;
@@ -192,6 +192,22 @@ require_once '../misc/db_connection.php';
     font-weight: 1000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+#orders{
+    display: inline-block;
+    width: 75px;
+    padding: 2px 0;
+    background-color: coral;
+    border-radius: 5px;
+    color: black;
+    margin: 30px 5px;
+    vertical-align: top;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 1000;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 #createAccount, #manageAssets{
     margin: 20px 5px;
 }

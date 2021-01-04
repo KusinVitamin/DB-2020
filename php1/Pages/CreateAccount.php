@@ -60,7 +60,7 @@ if(isset($_POST['submitButton'])){
     <input type = "hidden" name ="account" value="c">
     First name:     <input type="text" name ="Fname" required> <br>
     Last name:	    <input type="text" name ="Lname" required> <br>
-    Phone number    <input type ="tel" name ="PnumberInput" > <br>
+    Phone number    <input type ="number" name ="PnumberInput" > <br>
     Email           <input type="text" name ="EmailInput" required> <br>
     Adress          <input type="text" name ="AdressInput" required> <br>
     Postal code  	<input type="text" name ="PostalCodeInput" > <br>
